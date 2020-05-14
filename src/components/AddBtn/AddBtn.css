@@ -1,0 +1,14 @@
+.add-item-button {
+    cursor:pointer;
+    position:fixed;
+    bottom:32px;
+    left:50%;
+    margin:0 auto;
+}
+
+.add-item-button img {
+    position:relative;
+    left:-50%;
+    width: 77px;
+    height: 77px;
+}

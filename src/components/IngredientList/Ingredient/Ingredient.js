@@ -1,0 +1,35 @@
+import React from 'react';
+import './Ingredient.css';
+
+const Ingredient = ({id, name, percent, type, hydration, weight, units, handler}) => {
+
+    const updateItem = (event) => {
+        handler(id, event.target.name, event.target.value);
+    }
+    return (
+        <div className={"ingredient"}>
+            <div className={"ingredient__name"}>
+                <input placeholder={"add ingredient name"} type={"text"} name={"name"} autoComplete={"off"} value={name} onChange={updateItem} />
+            </div>
+            <div className={"ingredient__percent"}>
+                <input placeholder={"-"} type={"number"} min={"0"} step={"0.01"} name={"percent"} value={percent} onChange={updateItem} />
+            </div>
+            <div className={"ingredient-info"}>
+                <div className={"ingredient__type"}>
+                    <select  name={"type"} value={type} onChange={updateItem}>
+                        <option value={"none"}>n/a</option>
+                        <option value={"flour"}>flour</option>
+                        <option value={"liquid"}>liquid</option>
+                        <option value={"starter"}>starter</option>
+                    </select>
+                </div>
+                <div className={"ingredient__hydration"}>
+                    <input placeholder={"-"} type={"number"} min={"0"} step={"0.01"} name={"hydration"} value={hydration} onChange={updateItem} />
+                </div>
+            </div>
+            <div className={"ingredient__weight"}>{weight}<span className={"ingredient__units"}>{units}</span></div>
+        </div>
+    );
+}
+
+export default Ingredient;

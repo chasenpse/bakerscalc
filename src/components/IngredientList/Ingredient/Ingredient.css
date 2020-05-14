@@ -1,0 +1,153 @@
+.ingredient {
+    margin-bottom:20px;
+    width:100%;
+    background:rgba(255,255,255,0.75);
+    border-radius:10px;
+    height:134px;
+    box-sizing:border-box;
+    position: relative;
+    font-weight:bold;
+    display:flex;
+    justify-content: space-between;
+}
+
+.ingredient input:hover, .ingredient input:focus {
+    border-bottom:1px solid rgba(0,0,0,0.5);
+}
+
+.ingredient:last-of-type {
+    margin-bottom:196px;
+}
+
+.ingredient input, select {
+    background:none;
+    border:0;
+    padding:0;
+}
+
+.ingredient__name {
+    padding-left:20px;
+    height:50%;
+    line-height:50%;
+}
+
+.ingredient__name input {
+    font-size:2.25rem;
+    font-weight:inherit;
+    width:440px;
+    margin-top:10px;
+    height:2.4rem;
+}
+
+input::placeholder {
+    color:rgba(0,0,0,0.33);
+}
+
+.ingredient__percent {
+    padding-right:195px;
+    height:50%;
+    line-height:50%;
+}
+
+.ingredient__percent input {
+    text-align: right;
+    width:100px;
+    height:2.4rem;
+    margin-top:10px;
+    font-weight: inherit;
+    font-size:2.25rem;
+}
+
+.ingredient__percent::after {
+    font-size:2.25rem;
+    color:#000000;
+    content: '%';
+}
+
+.ingredient-info {
+    background:rgba(255,255,255,0.75);
+    position:absolute;
+    left:0;
+    bottom:0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-sizing: border-box;
+    padding-top:20px;
+    height:50%;
+    width:100%;
+    display:flex;
+    justify-content: space-between;
+}
+
+.ingredient__type {
+    padding-left:20px;
+    height:100%;
+}
+
+.ingredient__type select {
+    width:100px;
+    font-size:1.5rem;
+    font-weight:bold;
+    color:rgba(0,0,0,0.5);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    background-image: url("dropdownArrow.png");
+    background-repeat: no-repeat;
+    background-size: 0.8rem auto;
+    background-position: right 10px;
+}
+
+.ingredient__type select:hover, .ingredient__type select:focus {
+    border-bottom:1px solid rgba(0,0,0,0.5);
+}
+
+.ingredient__type select option {
+    height:1.5rem;
+    font-size:1.5rem;
+    font-weight:bold;
+    color:rgba(0,0,0,0.5);
+}
+
+.ingredient__hydration {
+    padding-right:195px;
+    height:50%;
+}
+
+.ingredient__hydration input {
+    text-align: right;
+    width:100px;
+    height:1.5rem;
+    font-weight: inherit;
+    font-size:1.5rem;
+    /*color:rgba(0,0,0,0.5);*/
+}
+
+.ingredient__hydration::after {
+    font-size:1.5rem;
+    color:rgba(0,0,0,0.5);
+    content: '% Hydration';
+}
+
+.ingredient__weight {
+    display:inline-block;
+    position: absolute;
+    top:0;
+    right:0;
+    width:175px;
+    height:100%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    color:#000;
+    background: linear-gradient(to bottom, #feba59 0%, #fcaa4a 100%);
+    font-size:2.25rem;
+    box-sizing: border-box;
+    padding: 10px 8px;
+    text-align: right;
+}
+
+.ingredient__units {
+    color: rgba(0,0,0,0.5);
+}
