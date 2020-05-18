@@ -2,7 +2,7 @@ import React from 'react';
 import Ingredient from './Ingredient/Ingredient';
 import './IngredientList.css';
 
-const IngredientList = ({ingredients, units, updateIngredient}) => {
+const IngredientList = ({ingredients, units, onUpdateIngredient}) => {
     return (
         <div className={"ingredient-list"}>
             {
@@ -17,7 +17,7 @@ const IngredientList = ({ingredients, units, updateIngredient}) => {
                             hydration={ingredient.hydration}
                             weight={ingredient.weight}
                             units={units}
-                            handler={updateIngredient}
+                            handler={onUpdateIngredient}
                         />
                     )
                 })

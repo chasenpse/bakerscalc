@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Option = () => {
+const Option = ({id, label, value, visible}) => {
     return (
-        <div>
-
+        <div className={"option"}>
+            {id}:{label}:{value}:{visible ? 'true' : 'false'}
         </div>
     );
 }

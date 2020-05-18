@@ -11,6 +11,8 @@
     color:#fff;
     min-width: 200px;
     max-width: 500px;
+    padding:0;
+    vertical-align: text-bottom;
 }
 
 .title input::placeholder {

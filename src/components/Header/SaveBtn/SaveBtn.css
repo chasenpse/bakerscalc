@@ -1,14 +1,13 @@
-#notesBtn {
+#saveBtn {
     border:0;
-    background: url('notes.png');
+    background: url('save.png');
     background-size: 100% auto;
     background-repeat: no-repeat;
-    width:31px;
-    height:30px;
+    width:41px;
+    height:33px;
     padding:0;
     opacity: 0.5;
 }
-
-#notesBtn:hover, #notesBtn:active {
+#saveBtn:hover, #saveBtn:active {
     opacity: 1;
 }

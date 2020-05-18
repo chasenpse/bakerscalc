@@ -9,3 +9,7 @@ header {
     background-color:#343233;
     z-index:50;
 }
+
+button {
+    cursor: pointer;
+}

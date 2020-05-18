@@ -1,0 +1,13 @@
+#closeMenuBtn {
+    position: fixed;
+    z-index:75;
+    top:20px;
+    left:20px;
+    border:0;
+    background: url('closeMenu.png');
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    width:34px;
+    height:32px;
+    padding:0;
+}

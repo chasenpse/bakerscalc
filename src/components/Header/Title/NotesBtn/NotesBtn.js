@@ -1,10 +1,10 @@
-import React from 'react';
-import './NotesBtn.css';
+import React from 'react'
+import './NotesBtn.css'
 
 const NotesBtn = () => {
-    return (
-        <button>note</button>
-    )
+    return(
+        <button id="notesBtn" type={"button"}></button>
+    );
 }
 
 export default NotesBtn;
