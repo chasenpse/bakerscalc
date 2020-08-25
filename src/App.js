@@ -35,6 +35,7 @@ class App extends Component {
                     value: 'g',
                     group: 'global',
                     type: 'select',
+                    data: ['g', 'oz', 'lb', 'kg'],
                     visible: true
                 },
                 {
