@@ -50,15 +50,16 @@ class App extends Component {
                     label: 'precision',
                     value: 4,
                     group: 'global',
-                    type: 'select',
+                    type: 'input',
                     visible: true
                 },
                 {
                     id: 'calcMode',
                     label: 'calc mode',
-                    value: 'bakerpercentage',
+                    value: 'baker\'s percentage',
                     group: 'global',
                     type: 'select',
+                    data: ['baker\'s percentage', 'thickness factor', 'reverse'],
                     visible: true
                 },
                 {

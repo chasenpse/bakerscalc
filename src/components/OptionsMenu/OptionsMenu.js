@@ -9,6 +9,7 @@ const OptionsMenu = ({options, visible, onMenuBtnClick}) => {
             return (
                 <div className={"overlay"}>
                     <CloseMenuBtn handler={onMenuBtnClick} />
+                    <h1>BakersCalc</h1>
                     <div className={"options-list"}>
                         {
                             options.map((option, i) => {
@@ -19,6 +20,7 @@ const OptionsMenu = ({options, visible, onMenuBtnClick}) => {
                                         label={option.label}
                                         value={option.value}
                                         group={option.group}
+                                        type={option.type}
                                         visible={option.visible}
                                     />
                                 )

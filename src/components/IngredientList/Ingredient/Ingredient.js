@@ -12,7 +12,7 @@ const Ingredient = ({id, name, percent, type, hydration, weight, units, handler}
                 <input placeholder={"add ingredient name"} type={"text"} name={"name"} autoComplete={"off"} value={name} onChange={updateItem} />
             </div>
             <div className={"ingredient__percent"}>
-                <input placeholder={"-"} type={"number"} min={"0"} step={"0.01"} name={"percent"} value={percent} onChange={updateItem} />
+                <input inputMode="decimal" placeholder={"-"} type={"number"} min={"0"} step={"0.01"} name={"percent"} value={percent} onChange={updateItem} />
             </div>
             <div className={"ingredient-info"}>
                 <div className={"ingredient__type"}>
@@ -24,7 +24,7 @@ const Ingredient = ({id, name, percent, type, hydration, weight, units, handler}
                     </select>
                 </div>
                 <div className={"ingredient__hydration"}>
-                    <input placeholder={"-"} type={"number"} min={"0"} step={"0.01"} name={"hydration"} value={hydration} onChange={updateItem} />
+                    <input inputMode="decimal" placeholder={"-"} type={"number"} min={"0"} step={"0.01"} name={"hydration"} value={hydration} onChange={updateItem} />
                 </div>
             </div>
             <div className={"ingredient__weight"}>{weight}<span className={"ingredient__units"}>{units}</span></div>
