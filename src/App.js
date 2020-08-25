@@ -123,7 +123,7 @@ class App extends Component {
             hydration: '',
             weight: '',
         }
-        this.setState({ingredients: [...this.state.ingredients, ingredient]}, () => console.log(this.state));
+        this.setState({ingredients: [...this.state.ingredients, ingredient]}, () => console.log("Ingredient added"));
     }
 
     updateIngredient = (id, key, val) => {
