@@ -1,9 +1,9 @@
 import React from 'react'
 import './CloseMenuBtn.css'
 
-const CloseMenuBtn = ({handler}) => {
+const CloseMenuBtn = ({onMenuBtnClick}) => {
     return(
-        <button id="closeMenuBtn" type={"button"} onClick={handler}></button>
+        <button id="closeMenuBtn" type={"button"} onClick={onMenuBtnClick}></button>
     );
 }
 

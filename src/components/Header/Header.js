@@ -7,9 +7,9 @@ import SaveBtn from "./SaveBtn/SaveBtn";
 const Header = ({onMenuBtnClick, onNotesBtnClick, onSaveBtnClick}) => {
     return (
         <header>
-            <OpenMenuBtn handler={onMenuBtnClick} />
+            <OpenMenuBtn onMenuBtnClick={onMenuBtnClick} />
             <Title onNotesBtnClick={onNotesBtnClick} />
-            <SaveBtn />
+            <SaveBtn onSaveBtnClick={onSaveBtnClick} />
         </header>
     )
 }

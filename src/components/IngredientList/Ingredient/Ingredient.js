@@ -3,10 +3,11 @@ import React from 'react';
 // import { useDrag } from 'react-use-gesture'
 import './Ingredient.css';
 
-const Ingredient = ({id, name, percent, type, hydration, weight, units, handler}) => {
+const Ingredient = ({id, name, percent, type, hydration, weight, units, onUpdateIngredient}) => {
 
     const updateItem = (event) => {
-        handler(id, event.target.name, event.target.value);
+        onUpdateIngredient(id, event.target.name, event.target.value);
+        console.log(id, event.target.name, event.target.value)
     }
     return (
         <div className={"ingredient"}>

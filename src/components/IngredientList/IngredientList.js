@@ -9,7 +9,7 @@ const IngredientList = ({ingredients, units, onUpdateIngredient}) => {
                 ingredients.map((ingredient, i) => {
                     return(
                         <Ingredient
-                            key={'ingredient-'+i}
+                            key={i}
                             id={i}
                             name={ingredient.name}
                             percent={ingredient.percent}
@@ -17,7 +17,7 @@ const IngredientList = ({ingredients, units, onUpdateIngredient}) => {
                             hydration={ingredient.hydration}
                             weight={ingredient.weight}
                             units={units}
-                            handler={onUpdateIngredient}
+                            onUpdateIngredient={onUpdateIngredient}
                         />
                     )
                 })

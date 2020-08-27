@@ -1,9 +1,9 @@
 import React from 'react'
 import './SaveBtn.css'
 
-const SaveBtn = ({handler}) => {
+const SaveBtn = ({onSaveBtnClick}) => {
     return(
-        <button id="saveBtn" type={"button"} onClick={handler}></button>
+        <button id="saveBtn" type={"button"} onClick={onSaveBtnClick}></button>
     );
 }
 

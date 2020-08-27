@@ -1,4 +1,50 @@
 .option {
+    font-size:1.5rem;
     line-height:3.125rem;
     padding:0 16px;
+    color:#000;
+    font-weight:bold;
+    display: flex;
+}
+
+.option input, .option select {
+    color:#FFFFFF;
+    font-size:1.5rem;
+    background:rgba(0,0,0,0.5);
+    border:0;
+    border-radius:4px;
+    box-sizing: border-box;
+}
+
+.option input {
+    width:80px;
+    padding:0 10px;
+    text-align: right;
+}
+
+.option select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    background-image: url("../../../assets/dropdownArrow.png");
+    background-repeat: no-repeat;
+    background-size: 0.8rem auto;
+    background-position: right 6px  top 10px;
+    padding:0 32px 0 10px;
+    box-sizing: border-box;
+}
+
+.option select option {
+    color:#FFFFFF;
+    background:#7E5A2A;
+}
+
+.option .option__label:after {
+    content: ":";
+}
+
+.option .option__value {
+    margin-left:auto;
 }

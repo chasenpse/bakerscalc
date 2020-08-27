@@ -49,7 +49,7 @@ class App extends Component {
                 {
                     id: 'precision',
                     label: 'precision',
-                    value: 4,
+                    value: 2,
                     group: 'global',
                     type: 'input',
                     visible: true
@@ -132,21 +132,40 @@ class App extends Component {
             case 'percent':
             case 'hydration':
             case 'weight':
-                this.setState((prevState) => ({
-                    ingredients: prevState.ingredients.map((ingredient) =>
+                this.setState(state => ({
+                    ingredients: state.ingredients.map(ingredient =>
                         ingredient.id === id ? { ...ingredient, [key]: Number(val) } : ingredient
                     ),
                 }), () => { console.log(this.state)});
                 break;
             default:
-                this.setState((prevState) => ({
-                    ingredients: prevState.ingredients.map((ingredient) =>
+                this.setState(state => ({
+                    ingredients: state.ingredients.map(ingredient =>
                         ingredient.id === id ? { ...ingredient, [key]: val } : ingredient
                     ),
                 }), () => { console.log(this.state)});
                 break;
         }
     };
+
+    updateOption = (id, type, val) => {
+        switch(type) {
+            case 'input':
+                this.setState(state => ({
+                    options: state.options.map((option) =>
+                        option["id"] === id ? { ...option, 'value': Number(val) } : option
+                    ),
+                }));
+                break;
+            default:
+                this.setState(state => ({
+                    options: state.options.map((option) =>
+                        option["id"] === id ? { ...option, 'value': val } : option
+                    ),
+                }));
+                break;
+        }
+    }
 
     toggleMenuClick = () => {
         this.setState((prevState) => ({
@@ -167,10 +186,6 @@ class App extends Component {
     }
 
     componentDidMount() {
-        console.log(this.state.options.map(option => {
-            return option.id === "displayUnits" ? option.value : null
-        }));
-        console.log();
     }
 
     render() {
@@ -179,7 +194,7 @@ class App extends Component {
         return (
             <div className={"App"}>
                 <Header onMenuBtnClick={this.toggleMenuClick} onNotesBtnClick={this.notesBtnClick} onSaveBtnClick={this.saveBtnClick} />
-                <OptionsMenu options={options} visible={optionsVisible} onMenuBtnClick={this.toggleMenuClick} />
+                <OptionsMenu options={options} visible={optionsVisible} onMenuBtnClick={this.toggleMenuClick} onOptionChange={this.updateOption} />
                 <div className={"formula-container"}>
                     <DoughStats data={doughStats} units={displayUnits} />
                     <IngredientList ingredients={ingredients} units={displayUnits} onUpdateIngredient={this.updateIngredient} />

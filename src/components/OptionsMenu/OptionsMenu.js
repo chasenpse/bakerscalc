@@ -3,12 +3,12 @@ import Option from "./Option/Option";
 import './OptionsMenu.css'
 import CloseMenuBtn from "./CloseMenuBtn/CloseMenuBtn";
 
-const OptionsMenu = ({options, visible, onMenuBtnClick}) => {
+const OptionsMenu = ({options, visible, onMenuBtnClick, onOptionChange}) => {
     switch(visible) {
         case true:
             return (
                 <div className={"overlay"}>
-                    <CloseMenuBtn handler={onMenuBtnClick} />
+                    <CloseMenuBtn onMenuBtnClick={onMenuBtnClick} />
                     <h1>BakersCalc</h1>
                     <div className={"options-list"}>
                         {
@@ -16,19 +16,20 @@ const OptionsMenu = ({options, visible, onMenuBtnClick}) => {
                                 if (option.type === 'input') {
                                     return (
                                         <Option
-                                            key={'option-' + i}
+                                            key={i}
                                             id={option.id}
                                             label={option.label}
                                             value={option.value}
                                             group={option.group}
                                             type={option.type}
                                             visible={option.visible}
+                                            onOptionChange={onOptionChange}
                                         />
                                     )
                                 } else if (option.type === 'select') {
                                     return (
                                         <Option
-                                            key={'option-' + i}
+                                            key={i}
                                             id={option.id}
                                             label={option.label}
                                             value={option.value}
@@ -36,6 +37,7 @@ const OptionsMenu = ({options, visible, onMenuBtnClick}) => {
                                             type={option.type}
                                             data={option.data}
                                             visible={option.visible}
+                                            onOptionChange={onOptionChange}
                                         />
                                     )
                                 } else {

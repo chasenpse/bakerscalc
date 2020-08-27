@@ -1,9 +1,9 @@
 import React from 'react'
 import './OpenMenuBtn.css';
 
-const OpenMenuBtn = ({handler}) => {
+const OpenMenuBtn = ({onMenuBtnClick}) => {
     return(
-        <button id="openMenuBtn" type={"button"} onClick={handler}></button>
+        <button id="openMenuBtn" type={"button"} onClick={onMenuBtnClick}></button>
     );
 }
 

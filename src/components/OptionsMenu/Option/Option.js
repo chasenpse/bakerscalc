@@ -1,7 +1,12 @@
 import React from 'react';
 import './Option.css'
 
-const Option = ({id, label, value, group, type, data, visible}) => {
+const Option = ({id, label, value, group, type, data, visible, onOptionChange}) => {
+
+    const updateOption = (e) => {
+        onOptionChange(id, type, e.target.value);
+    }
+
     if (visible) {
         switch (type) {
             case 'input':
@@ -9,7 +14,7 @@ const Option = ({id, label, value, group, type, data, visible}) => {
                     <div className={"option input"}>
                         <span className={"option__label"}>{label}</span>
                         <span className={"option__value"}>
-                            <input type={"input"} value={value} />
+                            <input type={"input"} defaultValue={value} onChange={updateOption} />
                         </span>
                     </div>
                 );
@@ -18,12 +23,12 @@ const Option = ({id, label, value, group, type, data, visible}) => {
                     <div className={"option select"}>
                         <span className={"option__label"}>{label}</span>
                         <span className={"option__value"}>
-                            <select>
-                                {data.map(v=>{
+                            <select onChange={updateOption}>
+                                {data.map((v,i)=>{
                                     if (v==={value}) {
-                                        return (<option value={v} selected={"selected"}>{v}</option>);
+                                        return (<option key={i} defaultValue={v} selected={"selected"}>{v}</option>);
                                     } else {
-                                        return (<option value={v}>{v}</option>);
+                                        return (<option key={i} defaultValue={v}>{v}</option>);
                                     }
                                 })}
                             </select>
