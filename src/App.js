@@ -13,12 +13,10 @@ class App extends Component {
             formulaTitle: '',
             createDate: '',
             ingredients: [],
-            doughStats: {
-                totalWeight: 0,
-                ballWeight: 0,
-                totalPercent: 0,
-                hydration: 0,
-            },
+            totalWeight: 0,
+            ballWeight: 0,
+            totalPercent: 0,
+            hydration: 0,
             optionsVisible: false,
             options: [
                 {
@@ -119,9 +117,9 @@ class App extends Component {
         const ingredient = {
             id: this.state.ingredients.length,
             name: '',
-            percent: '',
+            percent: '0',
             type: '',
-            hydration: '',
+            hydration: '0',
             weight: '',
         }
         this.setState({ingredients: [...this.state.ingredients, ingredient]}, () => console.log("Ingredient added"));
@@ -131,19 +129,19 @@ class App extends Component {
         switch(key) {
             case 'percent':
             case 'hydration':
-            case 'weight':
+            case 'weight': // nothing technically changes weight, yet..
                 this.setState(state => ({
                     ingredients: state.ingredients.map(ingredient =>
                         ingredient.id === id ? { ...ingredient, [key]: Number(val) } : ingredient
                     ),
-                }), () => { console.log(this.state)});
+                }), () => { this.updateTotalPercent() });
                 break;
             default:
                 this.setState(state => ({
                     ingredients: state.ingredients.map(ingredient =>
                         ingredient.id === id ? { ...ingredient, [key]: val } : ingredient
                     ),
-                }), () => { console.log(this.state)});
+                }), () => { this.updateTotalPercent() });
                 break;
         }
     };
@@ -167,6 +165,16 @@ class App extends Component {
         }
     }
 
+    updateTotalPercent = () => {
+        let total = 0;
+        for (let i of this.state.ingredients) {
+            total += i.percent;
+        }
+        this.setState({
+            totalPercent: Number(total)
+        });
+    }
+
     toggleMenuClick = () => {
         this.setState((prevState) => ({
             optionsVisible: !prevState.optionsVisible
@@ -181,22 +189,15 @@ class App extends Component {
         console.log('saveBtnClick');
     }
 
-    calc = () => {
-
-    }
-
-    componentDidMount() {
-    }
-
     render() {
-        const {doughStats, ingredients, options, optionsVisible} = this.state;
+        const {totalWeight, ballWeight, totalPercent, hydration, ingredients, options, optionsVisible} = this.state;
         const displayUnits = this.state.options[1].value;
         return (
             <div className={"App"}>
                 <Header onMenuBtnClick={this.toggleMenuClick} onNotesBtnClick={this.notesBtnClick} onSaveBtnClick={this.saveBtnClick} />
                 <OptionsMenu options={options} visible={optionsVisible} onMenuBtnClick={this.toggleMenuClick} onOptionChange={this.updateOption} />
                 <div className={"formula-container"}>
-                    <DoughStats data={doughStats} units={displayUnits} />
+                    <DoughStats data={{totalWeight, ballWeight, totalPercent, hydration}} units={displayUnits} />
                     <IngredientList ingredients={ingredients} units={displayUnits} onUpdateIngredient={this.updateIngredient} />
                 </div>
                 <AddBtn addIngredient={this.addIngredient} />
