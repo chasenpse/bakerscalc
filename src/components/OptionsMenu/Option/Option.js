@@ -14,7 +14,7 @@ const Option = ({id, label, value, group, type, data, visible, onOptionChange}) 
                     <div className={"option input"}>
                         <span className={"option__label"}>{label}</span>
                         <span className={"option__value"}>
-                            <input type={"number"} min={0} defaultValue={value} onChange={updateOption} />
+                            <input inputMode="decimal" type={"number"} min={0} defaultValue={value} onChange={updateOption} />
                         </span>
                     </div>
                 );

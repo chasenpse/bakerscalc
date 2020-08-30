@@ -6,6 +6,7 @@
     width:41px;
     height:33px;
     padding:0;
+    margin-top:4px;
     opacity: 0.5;
 }
 #saveBtn:hover, #saveBtn:active {

@@ -20,6 +20,9 @@
     background:none;
     border:0;
     padding:0;
+    outline:none;
+    -webkit-appearance: none;
+    border-radius: 0;
 }
 
 .ingredient__properties {
@@ -41,7 +44,7 @@
     font-size:2.25rem;
     font-weight:inherit;
     margin-top:10px;
-    height:2.4rem;
+    padding-bottom:4px;
 }
 
 input::placeholder {
@@ -58,8 +61,8 @@ input::placeholder {
 .ingredient__percent input {
     text-align: right;
     width:100px;
-    height:2.4rem;
     margin-top:10px;
+    padding-bottom:4px;
     font-weight: inherit;
     font-size:2.25rem;
 }
@@ -116,6 +119,8 @@ input::placeholder {
     font-size:1.5rem;
     margin-top:21px;
     padding-right:3px;
+    outline:none;
+    -webkit-appearance: none;
 }
 
 .ingredient__hydration::after {
