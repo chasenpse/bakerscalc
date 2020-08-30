@@ -5,9 +5,9 @@ import './Ingredient.css';
 
 const Ingredient = ({id, name, percent, type, hydration, weight, units, onUpdateIngredient}) => {
 
-    const updateItem = (event) => {
-        onUpdateIngredient(id, event.target.name, event.target.value);
-        console.log(id, event.target.name, event.target.value)
+    const updateItem = (e) => {
+        onUpdateIngredient(id, e.target.name, e.target.value);
+        console.log(id, e.target.name, e.target.value)
     }
     return (
         <div className={"ingredient"}>

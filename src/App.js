@@ -128,13 +128,26 @@ class App extends Component {
     updateIngredient = (id, key, val) => {
         switch(key) {
             case 'percent':
-            case 'hydration':
             case 'weight': // nothing technically changes weight, yet..
                 this.setState(state => ({
                     ingredients: state.ingredients.map(ingredient =>
                         ingredient.id === id ? { ...ingredient, [key]: Number(val) } : ingredient
                     ),
                 }), () => { this.updateTotalPercent() });
+                break;
+            case 'hydration':
+                this.setState(state => ({
+                    ingredients: state.ingredients.map(ingredient =>
+                        ingredient.id === id ? { ...ingredient, [key]: Number(val) } : ingredient
+                    ),
+                }), () => { this.updateHydration() });
+                break;
+            case 'type':
+                this.setState(state => ({
+                    ingredients: state.ingredients.map(ingredient =>
+                        ingredient.id === id ? { ...ingredient, [key]: val } : ingredient
+                    ),
+                }), () => { this.updateHydration() });
                 break;
             default:
                 this.setState(state => ({
@@ -147,6 +160,22 @@ class App extends Component {
     };
 
     updateOption = (id, type, val) => {
+        switch (id) {
+            case "precision":
+                this.setState(state => ({
+                    options: state.options.map((option) =>
+                        option["id"] === id ? { ...option, 'value': Number(val) } : option
+                    ),
+                }), () => this.updateAll());
+                break;
+            default:
+                this.setState(state => ({
+                    options: state.options.map((option) =>
+                        option["id"] === id ? { ...option, 'value': val } : option
+                    ),
+                }));
+                break;
+        }
         switch(type) {
             case 'input':
                 this.setState(state => ({
@@ -165,14 +194,50 @@ class App extends Component {
         }
     }
 
+    updateTotalWeight = () => {
+        let total = 0;
+        for (let i of this.state.ingredients) {
+            total += Number(i.weight);
+        }
+        this.setState({totalWeight: total});
+    }
+
     updateTotalPercent = () => {
         let total = 0;
         for (let i of this.state.ingredients) {
-            total += i.percent;
+            total += Number(i.percent);
         }
-        this.setState({
-            totalPercent: Number(total)
-        });
+        this.setState({totalPercent: Number(total.toFixed(this.state.options[3]["value"]))});
+    }
+
+    updateHydration = () => {
+       this.setState({hydration: this.getTotalWater()});
+    }
+
+    getTotalFlour = () => {
+        let total = 0;
+        for (let i of this.state.ingredients) {
+            if (i.type === "flour") {
+                total += Number(i.percent);
+            }
+        }
+        return total;
+    }
+
+    getTotalWater = () => {
+        let total = 0;
+        for (let i of this.state.ingredients) {
+            if (i.type === "liquid") {
+                total += (Number(i.hydration) * Number(i.percent))/100;
+            }
+        }
+        return Number(total.toFixed(this.state.options[3]["value"]));
+    }
+
+    updateAll = () => {
+        this.updateTotalWeight();
+        this.updateTotalPercent();
+        this.updateHydration();
     }
 
     toggleMenuClick = () => {
@@ -190,7 +255,7 @@ class App extends Component {
     }
 
     render() {
-        const {totalWeight, ballWeight, totalPercent, hydration, ingredients, options, optionsVisible} = this.state;
+        const { totalWeight, ballWeight, totalPercent, hydration, ingredients, options, optionsVisible } = this.state;
         const displayUnits = this.state.options[1].value;
         return (
             <div className={"App"}>

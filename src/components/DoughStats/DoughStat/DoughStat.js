@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DoughStat = ({title, value, units}) => {
+const DoughStat = ({title, value, units, precision}) => {
     return (
         <div className={"dough-stat"}>
             <div className={"dough-stat__title"}>{title}</div>
