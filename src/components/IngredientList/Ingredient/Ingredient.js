@@ -5,20 +5,18 @@ import './Ingredient.css';
 
 const Ingredient = ({id, name, percent, type, hydration, weight, units, onUpdateIngredient}) => {
 
-    const handleFocus = (event) => event.target.value = null;
-
     const updateItem = (e) => {
         onUpdateIngredient(id, e.target.name, e.target.value);
-        console.log(id, e.target.name, e.target.value)
     }
+
     return (
         <div className={"ingredient"}>
             <div className={"ingredient__properties"}>
                 <div className={"ingredient__name"}>
-                    <input placeholder={"add ingredient name"} type={"text"} name={"name"} autoComplete={"off"} value={name} onFocus={handleFocus} onChange={updateItem} />
+                    <input placeholder={"add ingredient name"} type={"text"} name={"name"} autoComplete={"off"} value={name} onChange={updateItem} />
                 </div>
                 <div className={"ingredient__percent"}>
-                    <input inputMode="decimal" placeholder={"-"} type={"number"} min={"0"} step={"0.01"} name={"percent"} value={percent} onFocus={handleFocus} onChange={updateItem} />
+                    <input inputMode="decimal" placeholder={"-"} type={"number"} min={"0"} step={"0.01"} name={"percent"} value={percent} onChange={updateItem} />
                 </div>
                 <div className={"ingredient__type"}>
                     <select  name={"type"} value={type} onChange={updateItem}>
@@ -29,7 +27,7 @@ const Ingredient = ({id, name, percent, type, hydration, weight, units, onUpdate
                     </select>
                 </div>
                 <div className={"ingredient__hydration"}>
-                    <input inputMode="decimal" placeholder={"-"} type={"number"} min={"0"} step={"0.01"} name={"hydration"} value={hydration} onFocus={handleFocus} onChange={updateItem} />
+                    <input inputMode="decimal" placeholder={"-"} type={"number"} min={"0"} step={"0.01"} name={"hydration"} value={hydration} onChange={updateItem} />
                 </div>
                 <div className={"ingredient__weight"}>{weight}<span className={"ingredient__units"}>{units}</span></div>
             </div>

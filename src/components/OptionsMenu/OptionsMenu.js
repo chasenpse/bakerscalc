@@ -6,37 +6,38 @@ import CloseMenuBtn from "./CloseMenuBtn/CloseMenuBtn";
 const OptionsMenu = ({options, visible, onMenuBtnClick, onOptionChange}) => {
     switch(visible) {
         case true:
+            const orderedOptions = Object.entries(options).sort((a,b) => a[1].position-b[1].position);
             return (
                 <div className={"overlay"}>
                     <CloseMenuBtn onMenuBtnClick={onMenuBtnClick} />
                     <h1>BakersCalc</h1>
                     <div className={"options-list"}>
                         {
-                            options.map((option, i) => {
-                                if (option.type === 'input') {
+                            orderedOptions.map((option, i) => {
+                                if (option[1].type === 'input') {
                                     return (
                                         <Option
                                             key={i}
-                                            id={option.id}
-                                            label={option.label}
-                                            value={option.value}
-                                            group={option.group}
-                                            type={option.type}
-                                            visible={option.visible}
+                                            id={option[0]}
+                                            label={option[1].label}
+                                            value={option[1].value}
+                                            group={option[1].group}
+                                            type={option[1].type}
+                                            visible={option[1].visible}
                                             onOptionChange={onOptionChange}
                                         />
                                     )
-                                } else if (option.type === 'select') {
+                                } else if (option[1].type === 'select') {
                                     return (
                                         <Option
                                             key={i}
-                                            id={option.id}
-                                            label={option.label}
-                                            value={option.value}
-                                            group={option.group}
-                                            type={option.type}
-                                            data={option.data}
-                                            visible={option.visible}
+                                            id={option[0]}
+                                            label={option[1].label}
+                                            value={option[1].value}
+                                            group={option[1].group}
+                                            type={option[1].type}
+                                            data={option[1].data}
+                                            visible={option[1].visible}
                                             onOptionChange={onOptionChange}
                                         />
                                     )
