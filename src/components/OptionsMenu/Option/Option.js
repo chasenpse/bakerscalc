@@ -25,11 +25,7 @@ const Option = ({id, label, value, group, type, data, visible, onOptionChange}) 
                         <span className={"option__value"}>
                             <select onChange={updateOption}>
                                 {data.map((v,i)=>{
-                                    if (v==={value}) {
-                                        return (<option key={i} defaultValue={v} selected={"selected"}>{v}</option>);
-                                    } else {
-                                        return (<option key={i} defaultValue={v}>{v}</option>);
-                                    }
+                                    return (<option key={i} defaultValue={v}>{v}</option>);
                                 })}
                             </select>
                     </span>

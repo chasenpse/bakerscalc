@@ -16,6 +16,7 @@ class App extends Component {
             totalWeight: 0,
             ballWeight: 0,
             totalPercent: 0,
+            totalFlour: 0,
             hydration: 0,
             optionsVisible: false,
             options: {
@@ -57,13 +58,13 @@ class App extends Component {
                     value: 'baker\'s percentage',
                     group: 'global',
                     type: 'select',
-                    data: ['baker\'s percentage', 'thickness factor', 'reverse'],
+                    data: ['baker\'s percentage', 'thickness factor'],
                     visible: true,
                     position: 5
                 },
                 ballWeight: {
                     label: 'ball weight',
-                    value: 360,
+                    value: 0,
                     group: 'doughWeight',
                     type: 'input',
                     visible: true,
@@ -209,9 +210,22 @@ class App extends Component {
         this.setState({totalPercent: Number(total.toFixed(this.state.options.precision.value))});
     }
 
-    updateHydration = () => {
+    updateTotalFlour = () => {
         console.log(this.getTotalFlour());
+        this.setState({totalFlour: this.getTotalFlour()});
+    }
+
+    updateHydration = () => {
+        this.updateTotalFlour();
         this.setState({hydration: this.getTotalWater()});
+    }
+
+    calcWeights = () => {
+        this.setState(prevState => ({
+            ingredients: prevState.ingredients.map(ingredient =>
+                ({...ingredient, "weight": Number()})
+            )
+        }));
     }
 
     // returns total flour as percent
@@ -232,6 +246,7 @@ class App extends Component {
                     break;
             }
         }
+        console.log('total flour: ',total);
         return total;
     }
 
@@ -277,14 +292,14 @@ class App extends Component {
     }
 
     render() {
-        const { totalWeight, ballWeight, totalPercent, hydration, ingredients, options, optionsVisible } = this.state;
+        const { totalWeight, ballWeight, totalPercent, totalFlour, hydration, ingredients, options, optionsVisible } = this.state;
         const displayUnits = this.state.options.displayUnits.value;
         return (
             <div className={"App"}>
                 <Header onMenuBtnClick={this.toggleMenuClick} onNotesBtnClick={this.notesBtnClick} onSaveBtnClick={this.saveBtnClick} />
                 <OptionsMenu options={options} visible={optionsVisible} onMenuBtnClick={this.toggleMenuClick} onOptionChange={this.updateOption} />
                 <div className={"formula-container"}>
-                    <DoughStats data={{totalWeight, ballWeight, totalPercent, hydration}} units={displayUnits} />
+                    <DoughStats data={{totalWeight, ballWeight, totalPercent, totalFlour, hydration}} units={displayUnits} />
                     <IngredientList ingredients={ingredients} units={displayUnits} onUpdateIngredient={this.updateIngredient} />
                 </div>
                 <AddBtn addIngredient={this.addIngredient} />
