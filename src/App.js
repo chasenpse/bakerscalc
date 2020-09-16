@@ -64,7 +64,7 @@ class App extends Component {
                 },
                 ballWeight: {
                     label: 'ball weight',
-                    value: 0,
+                    value: 453.59,
                     group: 'doughWeight',
                     type: 'input',
                     visible: true,
@@ -118,47 +118,55 @@ class App extends Component {
         const ingredient = {
             id: this.state.ingredients.length,
             name: '',
-            percent: '',
+            percent: 0,
             type: 'none',
-            hydration: '',
-            weight: '',
+            hydration: 0,
+            weight: 0,
         }
-        this.setState({ingredients: [...this.state.ingredients, ingredient]}, () => console.log("Ingredient added"));
+        this.setState({ingredients: [...this.state.ingredients, ingredient]});
     }
 
-    updateIngredient = (id, key, val) => {
-        switch(key) {
+    updateIngredient = (id, name, val) => {
+        switch(name) {
+            case 'name':
+                this.setState(prevState => ({
+                    ingredients: prevState.ingredients.map(ingredient =>
+                        ingredient.id === id ? { ...ingredient, [name]: val } : ingredient
+                    ),
+                }));
+                break;
             case 'percent':
+            case 'hydration':
             case 'weight': // nothing technically changes weight, yet..
                 this.setState(prevState => ({
                     ingredients: prevState.ingredients.map(ingredient =>
-                        ingredient.id === id ? { ...ingredient, [key]: Number(val) } : ingredient
+                        ingredient.id === id ? { ...ingredient, [name]: Number(val) } : ingredient
                     ),
-                }), () => this.updateTotalPercent());
-                this.setState(prevState => ({
-                    ingredients: prevState.ingredients.map(ingredient =>
-                        ({ ...ingredient, "weight": Number(val) }))}));
-                break;
-            case 'hydration':
-                this.setState(prevState => ({
-                    ingredients: prevState.ingredients.map(ingredient =>
-                        ingredient.id === id ? { ...ingredient, [key]: Number(val) } : ingredient
-                    ),
-                }), () => this.updateHydration());
+                }), () => this.calculate());
                 break;
             case 'type':
                 this.setState(prevState => ({
-                    ingredients: prevState.ingredients.map(ingredient =>
-                        ingredient.id === id ? { ...ingredient, [key]: val } : ingredient
-                    ),
-                }), () => this.updateHydration());
+                    ingredients: prevState.ingredients.map(ingredient => {
+                        switch (val) {
+                            case 'n/a':
+                                return ingredient.id === id ? { ...ingredient, [name]: val } : ingredient;
+                            case 'flour':
+                                return ingredient.id === id ? { ...ingredient, [name]: val, 'hydration': 0 } : ingredient;
+                            case 'liquid':
+                            case 'starter':
+                                return ingredient.id === id ? { ...ingredient, [name]: val, 'hydration': 100 } : ingredient;
+                            default:
+                                return ingredient.id === id ? { ...ingredient, [name]: val } : ingredient;
+                        }
+                    }),
+                }), () => this.calculate());
                 break;
             default:
                 this.setState(prevState => ({
                     ingredients: prevState.ingredients.map(ingredient =>
-                        ingredient.id === id ? { ...ingredient, [key]: val } : ingredient
+                        ingredient.id === id ? { ...ingredient, [name]: val } : ingredient
                     ),
-                }), () => this.updateTotalPercent());
+                }));
                 break;
         }
     };
@@ -173,7 +181,7 @@ class App extends Component {
                                 ...prevState.options[id], value: Number(val)
                             }
                         }
-                    })
+                    }), () => this.calculate()
                 );
                 break;
             default:
@@ -184,55 +192,63 @@ class App extends Component {
                                 ...prevState.options[id], value: val
                             }
                         }
-                    })
+                    }), () => this.calculate()
                 );
                 break;
         }
     }
 
-    updateTotalWeight = () => {
+    updateDSTotalWeight = () => {
         let total = 0;
         for (let i of this.state.ingredients) {
             total += Number(i.weight);
         }
-        this.setState({totalWeight: total});
+        this.setState({totalWeight: total}, () => this.updateDSBallWeight());
     }
 
-    updateBallWeight = () => {
-        this.setState({ballWeight: this.state.options.ballWeight * (1 + this.state.options.bowlResiduePercent/100)});
+    updateDSBallWeight = () => {
+        const { totalWeight } = this.state;
+        const { numOfDoughBalls } = this.state.options;
+        this.setState({ballWeight: Number(totalWeight / numOfDoughBalls.value)});
     }
 
-    updateTotalPercent = () => {
-        let total = 0;
-        for (let i of this.state.ingredients) {
-            total += Number(i.percent);
-        }
-        this.setState({totalPercent: Number(total.toFixed(this.state.options.precision.value))});
+    updateDSTotalPercent = () => {
+        this.setState({totalPercent: this.getTotalPercent()});
     }
 
-    updateTotalFlour = () => {
-        console.log(this.getTotalFlour());
-        this.setState({totalFlour: this.getTotalFlour()});
+    updateDSTotalFlour = () => {
+        this.setState({totalFlour: this.getTotalFlourPercent()});
     }
 
-    updateHydration = () => {
-        this.updateTotalFlour();
-        this.setState({hydration: this.getTotalWater()});
+    updateDSHydration = () => {
+        const hydration = this.getTotalFlourPercent() !== 0 ? this.getTotalWaterPercent() / this.getTotalFlourPercent() * 100 : this.getTotalWaterPercent();
+        this.setState({hydration: hydration});
     }
 
-    calcWeights = () => {
+    updateDoughStats = () => {
+        this.updateDSTotalWeight();
+        this.updateDSTotalPercent();
+        this.updateDSTotalFlour();
+        this.updateDSHydration();
+    }
+
+    calculate = () => {
+        const { numOfDoughBalls, bowlResiduePercent, ballWeight } = this.state.options;
+        const totalWeight = (ballWeight.value * numOfDoughBalls.value) * (1 + bowlResiduePercent.value / 100); // ball weight * num balls * residue
+        const assumedFlourWeight = (totalWeight * 100) / this.getTotalPercent();
+
         this.setState(prevState => ({
             ingredients: prevState.ingredients.map(ingredient =>
-                ({...ingredient, "weight": Number()})
+                ({...ingredient, "weight": this.getTotalPercent() >= 100 ? Number(ingredient.percent / 100 * assumedFlourWeight) : Number(ingredient.percent / 100 * totalWeight)})
             )
-        }));
+        }), () => this.updateDoughStats());
     }
 
     // returns total flour as percent
-    getTotalFlour = () => {
+    // if != 100 then the formula contains errors
+    getTotalFlourPercent = () => {
         let total = 0;
         for (let i of this.state.ingredients) {
-            console.log(i.type)
             switch(i.type) {
                 case "flour":
                     total += Number(i.percent);
@@ -246,12 +262,11 @@ class App extends Component {
                     break;
             }
         }
-        console.log('total flour: ',total);
-        return total;
+        return Number(total.toFixed(this.state.options.precision.value));
     }
 
     // returns total water as percent
-    getTotalWater = () => {
+    getTotalWaterPercent = () => {
         let total = 0;
         for (let i of this.state.ingredients) {
             switch(i.type) {
@@ -264,17 +279,18 @@ class App extends Component {
                     break;
                 default:
                     break;
-
             }
         }
         return Number(total.toFixed(this.state.options.precision.value));
     }
 
-    updateAll = () => {
-        this.updateTotalWeight();
-        this.updateBallWeight();
-        this.updateTotalPercent();
-        this.updateHydration();
+    // returns total percent based on ingredient percentages
+    getTotalPercent = () => {
+        let total = 0;
+        for (let i of this.state.ingredients) {
+            total += Number(i.percent);
+        }
+        return Number(total.toFixed(this.state.options.precision.value));
     }
 
     toggleMenuClick = () => {
@@ -293,14 +309,15 @@ class App extends Component {
 
     render() {
         const { totalWeight, ballWeight, totalPercent, totalFlour, hydration, ingredients, options, optionsVisible } = this.state;
+        const precision = this.state.options.precision.value;
         const displayUnits = this.state.options.displayUnits.value;
         return (
             <div className={"App"}>
                 <Header onMenuBtnClick={this.toggleMenuClick} onNotesBtnClick={this.notesBtnClick} onSaveBtnClick={this.saveBtnClick} />
                 <OptionsMenu options={options} visible={optionsVisible} onMenuBtnClick={this.toggleMenuClick} onOptionChange={this.updateOption} />
                 <div className={"formula-container"}>
-                    <DoughStats data={{totalWeight, ballWeight, totalPercent, totalFlour, hydration}} units={displayUnits} />
-                    <IngredientList ingredients={ingredients} units={displayUnits} onUpdateIngredient={this.updateIngredient} />
+                    <DoughStats data={{totalWeight, ballWeight, totalPercent, totalFlour, hydration}} units={displayUnits} precision={precision} />
+                    <IngredientList ingredients={ingredients} units={displayUnits} onUpdateIngredient={this.updateIngredient} precision={precision}/>
                 </div>
                 <AddBtn addIngredient={this.addIngredient} />
             </div>

@@ -3,7 +3,7 @@ import React from 'react';
 // import { useDrag } from 'react-use-gesture'
 import './Ingredient.css';
 
-const Ingredient = ({id, name, percent, type, hydration, weight, units, onUpdateIngredient}) => {
+const Ingredient = ({id, name, percent, type, hydration, weight, units, onUpdateIngredient, precision}) => {
 
     const updateItem = (e) => {
         onUpdateIngredient(id, e.target.name, e.target.value);
@@ -29,7 +29,7 @@ const Ingredient = ({id, name, percent, type, hydration, weight, units, onUpdate
                 <div className={"ingredient__hydration"}>
                     <input inputMode="decimal" placeholder={"-"} type={"number"} min={"0"} step={"0.01"} name={"hydration"} value={hydration} onChange={updateItem} />
                 </div>
-                <div className={"ingredient__weight"}>{weight}<span className={"ingredient__units"}>{units}</span></div>
+                <div className={"ingredient__weight"}>{Number(weight.toFixed(precision))}<span className={"ingredient__units"}>{units}</span></div>
             </div>
             <div className={"ingredient__delete"}>X</div>
         </div>

@@ -6,11 +6,11 @@ const DoughStats = ({ data, units, precision }) => {
     const { totalWeight, ballWeight, totalPercent, totalFlour, hydration } = data;
     return (
         <div className={"dough-stats"}>
-            <DoughStat title={"total weight"} value={totalWeight} units={units} />
-            <DoughStat title={"ball weight"} value={ballWeight} units={units} />
-            <DoughStat title={"total percent"} value={totalPercent} units={"%"} />
-            <DoughStat title={"total flour"} value={totalFlour} units={"%"} />
-            <DoughStat title={"hydration"} value={hydration} units={"%"} />
+            <DoughStat title={"total weight"} value={totalWeight} units={units} precision={precision} />
+            <DoughStat title={"ball weight"} value={ballWeight} units={units} precision={precision} />
+            <DoughStat title={"total percent"} value={totalPercent} units={"%"} precision={precision} />
+            <DoughStat title={"total flour"} value={totalFlour} units={"%"} precision={precision} />
+            <DoughStat title={"hydration"} value={hydration} units={"%"} precision={precision} />
         </div>
     )
 }
