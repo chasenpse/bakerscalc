@@ -23,7 +23,7 @@ const Option = ({id, label, value, group, type, data, visible, onOptionChange}) 
                     <div className={"option select"}>
                         <span className={"option__label"}>{label}</span>
                         <span className={"option__value"}>
-                            <select onChange={updateOption}>
+                            <select value={value} onChange={updateOption}>
                                 {data.map((v,i)=>{
                                     return (<option key={i} defaultValue={v}>{v}</option>);
                                 })}

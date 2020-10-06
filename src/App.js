@@ -198,6 +198,23 @@ class App extends Component {
         }
     }
 
+    setWeight = (w,u) => {
+        const oz = 28.349523125;
+        const lb = 453.59237;
+        const kg = 1000;
+        switch (u) {
+            case 'oz':
+                return Number(w/oz);
+            case 'lb':
+                return Number(w/lb);
+            case 'kg':
+                return Number(w/kg);
+            default:
+                return Number(w);
+
+        }
+    }
+
     updateDSTotalWeight = () => {
         let total = 0;
         for (let i of this.state.ingredients) {
@@ -233,13 +250,13 @@ class App extends Component {
     }
 
     calculate = () => {
-        const { numOfDoughBalls, bowlResiduePercent, ballWeight } = this.state.options;
+        const { numOfDoughBalls, bowlResiduePercent, ballWeight, displayUnits } = this.state.options;
         const totalWeight = (ballWeight.value * numOfDoughBalls.value) * (1 + bowlResiduePercent.value / 100); // ball weight * num balls * residue
         const assumedFlourWeight = (totalWeight * 100) / this.getTotalPercent();
 
         this.setState(prevState => ({
             ingredients: prevState.ingredients.map(ingredient =>
-                ({...ingredient, "weight": this.getTotalPercent() >= 100 ? Number(ingredient.percent / 100 * assumedFlourWeight) : Number(ingredient.percent / 100 * totalWeight)})
+                ({...ingredient, "weight": this.getTotalPercent() >= 100 ? this.setWeight(ingredient.percent / 100 * assumedFlourWeight, displayUnits.value) : this.setWeight(ingredient.percent / 100 * totalWeight, displayUnits.value)})
             )
         }), () => this.updateDoughStats());
     }
