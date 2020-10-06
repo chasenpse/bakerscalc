@@ -226,7 +226,7 @@ class App extends Component {
     updateDSBallWeight = () => {
         const { totalWeight } = this.state;
         const { numOfDoughBalls } = this.state.options;
-        this.setState({ballWeight: Number(totalWeight / numOfDoughBalls.value)});
+        this.setState({ballWeight: numOfDoughBalls.value !== "0" ? Number(totalWeight / numOfDoughBalls.value) : 0});
     }
 
     updateDSTotalPercent = () => {
