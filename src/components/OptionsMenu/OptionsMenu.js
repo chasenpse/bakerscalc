@@ -14,30 +14,17 @@ const OptionsMenu = ({options, visible, onMenuBtnClick, onOptionChange}) => {
                     <div className={"options-list"}>
                         {
                             orderedOptions.map((option, i) => {
-                                if (option[1].type === 'input') {
+                                if (option[1].group === 'global' || option[1].group === options.calcMode.value) {
                                     return (
                                         <Option
                                             key={i}
                                             id={option[0]}
                                             label={option[1].label}
                                             value={option[1].value}
-                                            group={option[1].group}
+                                            data={option[1].data || null}
                                             type={option[1].type}
-                                            visible={option[1].visible}
-                                            onOptionChange={onOptionChange}
-                                        />
-                                    )
-                                } else if (option[1].type === 'select') {
-                                    return (
-                                        <Option
-                                            key={i}
-                                            id={option[0]}
-                                            label={option[1].label}
-                                            value={option[1].value}
-                                            group={option[1].group}
-                                            type={option[1].type}
-                                            data={option[1].data}
-                                            visible={option[1].visible}
+                                            min={option[1].min || 0}
+                                            step={option[1].step || 1}
                                             onOptionChange={onOptionChange}
                                         />
                                     )

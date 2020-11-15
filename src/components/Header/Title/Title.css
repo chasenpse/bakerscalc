@@ -1,20 +1,16 @@
 .title {
-    display:inline-block;
-}
-
-.title input {
     font-family: jaf-domus, Helvetica, Arial, sans-serif;
     font-weight:700;
     font-size:2em;
     background:none;
     border:0;
     color:#fff;
-    min-width: 200px;
-    max-width: 500px;
+    width:100%;
     padding:0;
     vertical-align: text-bottom;
+    text-align: center;
 }
 
-.title input::placeholder {
+.title::placeholder {
     color:rgba(255,255,255,0.5);
 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import './DoughStats.css';
+import './DoughStatsList.css';
 import DoughStat from './DoughStat/DoughStat';
 
-const DoughStats = ({ data, units, precision }) => {
+const DoughStatsList = ({ data, units, precision }) => {
     const { totalWeight, ballWeight, totalPercent, totalFlour, hydration } = data;
     return (
         <div className={"dough-stats"}>
@@ -15,4 +15,4 @@ const DoughStats = ({ data, units, precision }) => {
     )
 }
 
-export default DoughStats;
+export default DoughStatsList;

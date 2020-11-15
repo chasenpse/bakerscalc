@@ -11,6 +11,7 @@ const Ingredient = ({id, name, percent, type, hydration, weight, units, onUpdate
 
     return (
         <div className={"ingredient"}>
+            <div className={"ingredient__handle"} />
             <div className={"ingredient__properties"}>
                 <div className={"ingredient__name"}>
                     <input placeholder={"add ingredient name"} type={"text"} name={"name"} autoComplete={"off"} value={name} onChange={updateItem} />

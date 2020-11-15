@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
-import DoughStats from './components/DoughStats/DoughStats';
+import DoughStatsList from './components/DoughStatsList/DoughStatsList';
 import IngredientList from "./components/IngredientList/IngredientList";
 import AddBtn from "./components/AddBtn/AddBtn";
 import OptionsMenu from "./components/OptionsMenu/OptionsMenu";
@@ -25,7 +25,7 @@ class App extends Component {
                     value: 1,
                     group: 'global',
                     type: 'input',
-                    visible: true,
+                    min: 1,
                     position: 1
                 },
                 displayUnits: {
@@ -34,7 +34,6 @@ class App extends Component {
                     group: 'global',
                     type: 'select',
                     data: ['g', 'oz', 'lb', 'kg'],
-                    visible: true,
                     position: 2
                 },
                 bowlResiduePercent: {
@@ -42,7 +41,7 @@ class App extends Component {
                     value: 0,
                     group: 'global',
                     type: 'input',
-                    visible: true,
+                    step: 0.01,
                     position: 3
                 },
                 precision: {
@@ -50,7 +49,6 @@ class App extends Component {
                     value: 2,
                     group: 'global',
                     type: 'input',
-                    visible: true,
                     position: 4
                 },
                 calcMode: {
@@ -59,55 +57,50 @@ class App extends Component {
                     group: 'global',
                     type: 'select',
                     data: ['baker\'s percentage', 'thickness factor'],
-                    visible: true,
                     position: 5
                 },
                 ballWeight: {
                     label: 'ball weight',
                     value: 453.59,
-                    group: 'doughWeight',
+                    group: 'baker\'s percentage',
                     type: 'input',
-                    visible: true,
                     position: 6
                 },
                 thicknessFactor: {
                     label: 'thickness factor',
                     value: 0.1,
-                    group: 'thicknessFactor',
+                    group: 'thickness factor',
                     type: 'input',
-                    visible: false,
+                    step: 0.001,
                     position: 7
                 },
                 panShape: {
                     label: 'pan shape',
                     value: 'circular',
-                    group: 'thicknessFactor',
-                    type: 'input',
-                    visible: false,
+                    group: 'thickness factor',
+                    type: 'select',
+                    data: ['circular', 'rectangular'],
                     position: 8
                 },
                 panDiameter: {
                     label: 'pan diameter',
-                    value: 0,
-                    group: 'thicknessFactor',
+                    value: 14,
+                    group: 'thickness factor',
                     type: 'input',
-                    visible: false,
                     position: 9
                 },
                 panLength: {
                     label: 'pan length',
-                    value: 0,
-                    group: 'thicknessFactor',
+                    value: 9,
+                    group: 'thickness factor',
                     type: 'input',
-                    visible: false,
                     position: 10
                 },
                 panWidth: {
                     label: 'pan width',
-                    value: 0,
-                    group: 'thicknessFactor',
+                    value: 13,
+                    group: 'thickness factor',
                     type: 'input',
-                    visible: false,
                     position: 11
                 }
             }
@@ -118,9 +111,9 @@ class App extends Component {
         const ingredient = {
             id: this.state.ingredients.length,
             name: '',
-            percent: 0,
+            percent: '',
             type: 'none',
-            hydration: 0,
+            hydration: '',
             weight: 0,
         }
         this.setState({ingredients: [...this.state.ingredients, ingredient]});
@@ -226,7 +219,10 @@ class App extends Component {
     updateDSBallWeight = () => {
         const { totalWeight } = this.state;
         const { numOfDoughBalls } = this.state.options;
-        this.setState({ballWeight: numOfDoughBalls.value !== "0" ? Number(totalWeight / numOfDoughBalls.value) : 0});
+        if (numOfDoughBalls.value !== 0) {
+            return this.setState({ballWeight: Number(totalWeight / numOfDoughBalls.value)});
+        }
+        return this.setState({ballWeight: 0});
     }
 
     updateDSTotalPercent = () => {
@@ -333,7 +329,7 @@ class App extends Component {
                 <Header onMenuBtnClick={this.toggleMenuClick} onNotesBtnClick={this.notesBtnClick} onSaveBtnClick={this.saveBtnClick} />
                 <OptionsMenu options={options} visible={optionsVisible} onMenuBtnClick={this.toggleMenuClick} onOptionChange={this.updateOption} />
                 <div className={"formula-container"}>
-                    <DoughStats data={{totalWeight, ballWeight, totalPercent, totalFlour, hydration}} units={displayUnits} precision={precision} />
+                    <DoughStatsList data={{totalWeight, ballWeight, totalPercent, totalFlour, hydration}} units={displayUnits} precision={precision} />
                     <IngredientList ingredients={ingredients} units={displayUnits} onUpdateIngredient={this.updateIngredient} precision={precision}/>
                 </div>
                 <AddBtn addIngredient={this.addIngredient} />
