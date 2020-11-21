@@ -5,8 +5,14 @@ import DoughStatsList from './components/DoughStatsList/DoughStatsList';
 import IngredientList from "./components/IngredientList/IngredientList";
 import AddBtn from "./components/AddBtn/AddBtn";
 import OptionsMenu from "./components/OptionsMenu/OptionsMenu";
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 class App extends Component {
+
+    oz = 28.349523125;
+    lb = 453.59237;
+    kg = 1000;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -178,30 +184,40 @@ class App extends Component {
                 );
                 break;
             default:
-                this.setState(
-                    prevState => ({
-                        options: {
-                            ...prevState.options, [id]: {
-                                ...prevState.options[id], value: val
+                if (id === "displayUnits") {
+                    console.log("wow");
+                    this.setState(
+                        prevState => ({
+                            options: {
+                                ...prevState.options, [id]: {
+                                    ...prevState.options[id], value: val
+                                }
                             }
-                        }
-                    }), () => this.calculate()
-                );
-                break;
+                        }), () => this.calculate());
+                    break;
+                } else {
+                    this.setState(
+                        prevState => ({
+                            options: {
+                                ...prevState.options, [id]: {
+                                    ...prevState.options[id], value: val
+                                }
+                            }
+                        }), () => this.calculate()
+                    );
+                    break;
+                }
         }
     }
 
     setWeight = (w,u) => {
-        const oz = 28.349523125;
-        const lb = 453.59237;
-        const kg = 1000;
         switch (u) {
             case 'oz':
-                return Number(w/oz);
+                return Number(w/this.oz);
             case 'lb':
-                return Number(w/lb);
+                return Number(w/this.lb);
             case 'kg':
-                return Number(w/kg);
+                return Number(w/this.kg);
             default:
                 return Number(w);
 
@@ -252,7 +268,10 @@ class App extends Component {
 
         this.setState(prevState => ({
             ingredients: prevState.ingredients.map(ingredient =>
-                ({...ingredient, "weight": this.getTotalPercent() >= 100 ? this.setWeight(ingredient.percent / 100 * assumedFlourWeight, displayUnits.value) : this.setWeight(ingredient.percent / 100 * totalWeight, displayUnits.value)})
+                ({...ingredient,
+                    "weight": this.getTotalPercent() >= 100 ?
+                        this.setWeight(ingredient.percent / 100 * assumedFlourWeight, displayUnits.value)
+                        : this.setWeight(ingredient.percent / 100 * totalWeight, displayUnits.value)})
             )
         }), () => this.updateDoughStats());
     }
@@ -328,10 +347,8 @@ class App extends Component {
             <div className={"App"}>
                 <Header onMenuBtnClick={this.toggleMenuClick} onNotesBtnClick={this.notesBtnClick} onSaveBtnClick={this.saveBtnClick} />
                 <OptionsMenu options={options} visible={optionsVisible} onMenuBtnClick={this.toggleMenuClick} onOptionChange={this.updateOption} />
-                <div className={"formula-container"}>
-                    <DoughStatsList data={{totalWeight, ballWeight, totalPercent, totalFlour, hydration}} units={displayUnits} precision={precision} />
-                    <IngredientList ingredients={ingredients} units={displayUnits} onUpdateIngredient={this.updateIngredient} precision={precision}/>
-                </div>
+                <DoughStatsList data={{totalWeight, ballWeight, totalPercent, totalFlour, hydration}} units={displayUnits} precision={precision} />
+                <IngredientList ingredients={ingredients} units={displayUnits} onUpdateIngredient={this.updateIngredient} precision={precision} />
                 <AddBtn addIngredient={this.addIngredient} />
             </div>
         );

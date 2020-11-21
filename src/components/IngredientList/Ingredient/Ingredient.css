@@ -8,7 +8,7 @@
     justify-content: space-between;
 }
 
-.ingredient input:hover, .ingredient input:focus {
+.ingredient input:hover, .ingredient input:focus, .ingredient__type select:hover, .ingredient__type select:focus {
     border-bottom:1px solid rgba(0,0,0,0.5);
 }
 
@@ -92,10 +92,6 @@ input::placeholder {
     background-size: 0.8rem auto;
     background-position: right 10px;
     margin-top:19px;
-}
-
-.ingredient__type select:hover, .ingredient__type select:focus {
-    border-bottom:1px solid rgba(0,0,0,0.5);
 }
 
 .ingredient__type select option {
@@ -186,4 +182,66 @@ input::placeholder {
 
 .ingredient__units {
     color: rgba(0,0,0,0.5);
+}
+
+@media screen and (max-width: 820px) {
+    .ingredient {
+        height: unset;
+    }
+    .ingredient__properties {
+        display:block;
+        background: #F2F2F2;
+        padding: 5px 0 0 32px;
+    }
+    .ingredient__name, .ingredient__percent, .ingredient__type, .ingredient__hydration {
+        padding: 2px 0 0 10px;
+        line-height: 32px;
+        height: 32px;
+        margin: unset;
+    }
+    .ingredient__name input,
+    .ingredient__hydration input,
+    .ingredient__hydration::after,
+    .ingredient__percent input,
+    .ingredient__percent::after,
+    .ingredient__type select {
+        font-size:1.5rem;
+        padding: 0;
+        margin: 0;
+    }
+    .ingredient__weight {
+        font-size:1.75rem;
+        padding: 7px;
+        margin-top:10px;
+        width:100%;
+        display:inline-block;
+        position: unset;
+        top:unset;
+        right:unset;
+        height:unset;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 10px;
+        color:#000;
+        background: linear-gradient(to bottom, #feba59 0%, #fcaa4a 100%);
+        box-sizing: border-box;
+        text-align: center;
+    }
+    .ingredient input:hover, .ingredient input:focus, .ingredient__type select:hover, .ingredient__type select:focus {
+        border-bottom:0;
+    }
+    .ingredient__percent input, .ingredient__hydration input {
+        background: rgba(0,0,0,0.12);
+        border-radius:7px;
+        height: 32px;
+        padding:0 10px;
+    }
+    .ingredient__delete {
+        top:5px;
+        right:5px;
+        width:32px;
+        height:32px;
+        line-height:32px;
+        border-radius: 16px;
+        font-size: 1.25rem;
+    }
 }

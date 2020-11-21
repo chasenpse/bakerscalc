@@ -3,8 +3,9 @@
     background: url('openMenu.png');
     background-size: 100% auto;
     background-repeat: no-repeat;
+    background-position: center;
     width:34px;
     height:32px;
     padding:0;
-    margin-top:4px;
+    display:inline-block;
 }

@@ -7,14 +7,12 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "bcryptjs": "^2.4.3",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-redux": "^7.2.1",
-    "react-scripts": "^3.4.3",
-    "react-spring": "^8.0.27",
-    "react-use-gesture": "^7.0.15",
-    "redux": "^4.0.5",
-    "update-input-width": "^1.2.1"
+    "react": "^16.14.0",
+    "react-beautiful-dnd": "^13.0.0",
+    "react-dom": "^16.14.0",
+    "react-redux": "^7.2.2",
+    "react-scripts": "^4.0.0",
+    "redux": "^4.0.5"
   },
   "scripts": {
     "start": "react-scripts start",

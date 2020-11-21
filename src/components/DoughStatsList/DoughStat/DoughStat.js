@@ -1,4 +1,5 @@
 import React from 'react';
+import './DoughStat.css';
 
 const DoughStat = ({title, value, units, precision}) => {
     return (

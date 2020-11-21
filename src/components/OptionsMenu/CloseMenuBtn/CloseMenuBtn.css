@@ -1,14 +1,19 @@
 #closeMenuBtn {
-    position: fixed;
+    position: absolute;
     z-index:75;
     top:20px;
     left:20px;
     border:0;
-    background: url('closeMenu.png');
-    background-size: 100% auto;
-    background-repeat: no-repeat;
+    background: url("./closeMenu.png") 0 0/100% auto no-repeat;
     width:34px;
     height:32px;
     padding:0;
     margin-top:4px;
+}
+
+@media screen and (max-width: 820px) {
+    #closeMenuBtn {
+        left:10px;
+        width:28px;
+    }
 }
