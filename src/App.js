@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
+import OptionsMenu from "./components/OptionsMenu/OptionsMenu";
 import DoughStatsList from './components/DoughStatsList/DoughStatsList';
 import IngredientList from "./components/IngredientList/IngredientList";
 import AddBtn from "./components/AddBtn/AddBtn";
-import OptionsMenu from "./components/OptionsMenu/OptionsMenu";
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 class App extends Component {
 
@@ -115,7 +114,6 @@ class App extends Component {
 
     addIngredient = () => {
         const ingredient = {
-            id: this.state.ingredients.length,
             name: '',
             percent: '',
             type: 'none',
@@ -125,50 +123,43 @@ class App extends Component {
         this.setState({ingredients: [...this.state.ingredients, ingredient]});
     }
 
-    updateIngredient = (id, name, val) => {
-        switch(name) {
-            case 'name':
-                this.setState(prevState => ({
-                    ingredients: prevState.ingredients.map(ingredient =>
-                        ingredient.id === id ? { ...ingredient, [name]: val } : ingredient
-                    ),
-                }));
-                break;
-            case 'percent':
-            case 'hydration':
-            case 'weight': // nothing technically changes weight, yet..
-                this.setState(prevState => ({
-                    ingredients: prevState.ingredients.map(ingredient =>
-                        ingredient.id === id ? { ...ingredient, [name]: Number(val) } : ingredient
-                    ),
-                }), () => this.calculate());
-                break;
-            case 'type':
-                this.setState(prevState => ({
-                    ingredients: prevState.ingredients.map(ingredient => {
-                        switch (val) {
-                            case 'n/a':
-                                return ingredient.id === id ? { ...ingredient, [name]: val } : ingredient;
-                            case 'flour':
-                                return ingredient.id === id ? { ...ingredient, [name]: val, 'hydration': 0 } : ingredient;
-                            case 'liquid':
-                            case 'starter':
-                                return ingredient.id === id ? { ...ingredient, [name]: val, 'hydration': 100 } : ingredient;
-                            default:
-                                return ingredient.id === id ? { ...ingredient, [name]: val } : ingredient;
-                        }
-                    }),
-                }), () => this.calculate());
-                break;
-            default:
-                this.setState(prevState => ({
-                    ingredients: prevState.ingredients.map(ingredient =>
-                        ingredient.id === id ? { ...ingredient, [name]: val } : ingredient
-                    ),
-                }));
-                break;
-        }
-    };
+    handleNameUpdate = (id,val) => {
+        this.setState(prevState => ({
+            ingredients: prevState.ingredients.map((ingredient, i) =>
+                i === id ? { ...ingredient, name: val } : ingredient
+            ),
+        }));
+    }
+
+    handlePercentUpdate = (id,val) => {
+        this.setState(prevState => ({
+            ingredients: prevState.ingredients.map((ingredient, i) =>
+                i === id ? { ...ingredient, percent: val } : ingredient
+            ),
+        }), () => this.calculate());
+    }
+
+    handleTypeUpdate = (id,val) => {
+        this.setState(prevState => ({
+            ingredients: prevState.ingredients.map((ingredient, i) =>
+                i === id ? { ...ingredient, type: val } : ingredient
+            ),
+        }), () => this.calculate());
+    }
+
+    handleHydrationUpdate = (id,val) => {
+        this.setState(prevState => ({
+            ingredients: prevState.ingredients.map((ingredient, i) =>
+                i === id ? { ...ingredient, hydration: val } : ingredient
+            ),
+        }), () => this.calculate());
+    }
+
+    handleRemoveIngredient = (id) => {
+        this.setState(prevState => ({
+            ingredients: prevState.ingredients.filter((ingredient, i)=>i!==id)
+        }), () => this.calculate());
+    }
 
     updateOption = (id, type, val) => {
         switch (type) {
@@ -345,10 +336,32 @@ class App extends Component {
         const displayUnits = this.state.options.displayUnits.value;
         return (
             <div className={"App"}>
-                <Header onMenuBtnClick={this.toggleMenuClick} onNotesBtnClick={this.notesBtnClick} onSaveBtnClick={this.saveBtnClick} />
-                <OptionsMenu options={options} visible={optionsVisible} onMenuBtnClick={this.toggleMenuClick} onOptionChange={this.updateOption} />
-                <DoughStatsList data={{totalWeight, ballWeight, totalPercent, totalFlour, hydration}} units={displayUnits} precision={precision} />
-                <IngredientList ingredients={ingredients} units={displayUnits} onUpdateIngredient={this.updateIngredient} precision={precision} />
+                <Header
+                    onMenuBtnClick={this.toggleMenuClick}
+                    onNotesBtnClick={this.notesBtnClick}
+                    onSaveBtnClick={this.saveBtnClick}
+                />
+                <OptionsMenu
+                    options={options}
+                    visible={optionsVisible}
+                    onMenuBtnClick={this.toggleMenuClick}
+                    onOptionChange={this.updateOption}
+                />
+                <DoughStatsList
+                    data={{totalWeight, ballWeight, totalPercent, totalFlour, hydration}}
+                    units={displayUnits}
+                    precision={precision}
+                />
+                <IngredientList
+                    ingredients={ingredients}
+                    units={displayUnits}
+                    handleNameUpdate={this.handleNameUpdate}
+                    handlePercentUpdate={this.handlePercentUpdate}
+                    handleTypeUpdate={this.handleTypeUpdate}
+                    handleHydrationUpdate={this.handleHydrationUpdate}
+                    handleRemoveIngredient={this.handleRemoveIngredient}
+                    precision={precision}
+                />
                 <AddBtn addIngredient={this.addIngredient} />
             </div>
         );

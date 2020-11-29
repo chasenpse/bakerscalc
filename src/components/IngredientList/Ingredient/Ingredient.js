@@ -1,26 +1,20 @@
 import React from 'react';
-// import { useSpring, animated } from 'react-spring'
-// import { useDrag } from 'react-use-gesture'
 import './Ingredient.css';
 
-const Ingredient = ({id, name, percent, type, hydration, weight, units, onUpdateIngredient, precision}) => {
-
-    const updateItem = (e) => {
-        onUpdateIngredient(id, e.target.name, e.target.value);
-    }
+const Ingredient = ({id, name, percent, type, hydration, weight, units, handleNameUpdate, handlePercentUpdate, handleTypeUpdate, handleHydrationUpdate, handleRemoveIngredient, precision}) => {
 
     return (
         <div className={"ingredient"}>
             <div className={"ingredient__handle"} />
             <div className={"ingredient__properties"}>
                 <div className={"ingredient__name"}>
-                    <input placeholder={"add ingredient name"} type={"text"} name={"name"} autoComplete={"off"} value={name} onChange={updateItem} />
+                    <input placeholder={"add ingredient name"} type={"text"} name={"name"} autoComplete={"off"} value={name} onChange={e=>handleNameUpdate(id,e.target.value)} />
                 </div>
                 <div className={"ingredient__percent"}>
-                    <input inputMode="decimal" placeholder={"-"} type={"number"} min={"0"} step={"0.01"} name={"percent"} value={percent} onChange={updateItem} />
+                    <input inputMode="decimal" placeholder={"-"} type={"number"} min={"0"} step={"0.01"} name={"percent"} value={percent} onChange={e=>handlePercentUpdate(id,e.target.value)} />
                 </div>
                 <div className={"ingredient__type"}>
-                    <select  name={"type"} value={type} onChange={updateItem}>
+                    <select  name={"type"} value={type} onChange={e=>handleTypeUpdate(id,e.target.value)}>
                         <option value={"none"}>n/a</option>
                         <option value={"flour"}>flour</option>
                         <option value={"liquid"}>liquid</option>
@@ -28,11 +22,11 @@ const Ingredient = ({id, name, percent, type, hydration, weight, units, onUpdate
                     </select>
                 </div>
                 <div className={"ingredient__hydration"}>
-                    <input inputMode="decimal" placeholder={"-"} type={"number"} min={"0"} step={"0.01"} name={"hydration"} value={hydration} onChange={updateItem} />
+                    <input inputMode="decimal" placeholder={"-"} type={"number"} min={"0"} step={"0.01"} name={"hydration"} value={hydration} onChange={e=>handleHydrationUpdate(id,e.target.value)} />
                 </div>
                 <div className={"ingredient__weight"}>{Number(weight.toFixed(precision))}<span className={"ingredient__units"}>{units}</span></div>
             </div>
-            <div className={"ingredient__delete"}>X</div>
+            <div className={"ingredient__delete"} onClick={() => { handleRemoveIngredient(id)}}>remove</div>
         </div>
     );
 }

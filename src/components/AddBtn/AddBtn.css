@@ -4,6 +4,7 @@
     bottom:32px;
     left:50%;
     margin:0 auto;
+    z-index:50;
 }
 
 .add-item-button img {
@@ -11,4 +12,14 @@
     left:-50%;
     width: 77px;
     height: 77px;
+}
+
+@media screen and (max-width: 820px) {
+    .add-item-button {
+        bottom:10px;
+    }
+    .add-item-button img {
+        width: 64px;
+        height: 64px;
+    }
 }

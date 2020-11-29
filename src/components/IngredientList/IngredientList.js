@@ -2,7 +2,7 @@ import React from 'react';
 import Ingredient from './Ingredient/Ingredient';
 import './IngredientList.css';
 
-const IngredientList = ({ingredients, units, onUpdateIngredient, precision}) => {
+const IngredientList = ({ingredients, units, handleNameUpdate, handlePercentUpdate, handleTypeUpdate, handleHydrationUpdate, handleRemoveIngredient, precision}) => {
     return (
         <div className={"ingredient-list"}>
             {
@@ -17,7 +17,11 @@ const IngredientList = ({ingredients, units, onUpdateIngredient, precision}) => 
                             hydration={ingredient.hydration}
                             weight={ingredient.weight}
                             units={units}
-                            onUpdateIngredient={onUpdateIngredient}
+                            handleNameUpdate={handleNameUpdate}
+                            handlePercentUpdate={handlePercentUpdate}
+                            handleTypeUpdate={handleTypeUpdate}
+                            handleHydrationUpdate={handleHydrationUpdate}
+                            handleRemoveIngredient={handleRemoveIngredient}
                             precision={precision}
                         />
                     )
