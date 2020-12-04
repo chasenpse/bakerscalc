@@ -1,7 +1,21 @@
 import React from 'react';
 import './Ingredient.css';
 
-const Ingredient = ({id, name, percent, type, hydration, weight, units, handleNameUpdate, handlePercentUpdate, handleTypeUpdate, handleHydrationUpdate, handleRemoveIngredient, precision}) => {
+const Ingredient = ({
+    id,
+    name,
+    percent,
+    type,
+    hydration,
+    weight,
+    units,
+    precision,
+    handleNameUpdate,
+    handlePercentUpdate,
+    handleTypeUpdate,
+    handleHydrationUpdate,
+    handleRemoveIngredient,
+    }) => {
 
     return (
         <div className={"ingredient"}>
@@ -26,7 +40,7 @@ const Ingredient = ({id, name, percent, type, hydration, weight, units, handleNa
                 </div>
                 <div className={"ingredient__weight"}>{Number(weight.toFixed(precision))}<span className={"ingredient__units"}>{units}</span></div>
             </div>
-            <div className={"ingredient__delete"} onClick={() => { handleRemoveIngredient(id)}}>remove</div>
+            <div className={"ingredient__delete"} onClick={() => { handleRemoveIngredient(id)}} />
         </div>
     );
 }

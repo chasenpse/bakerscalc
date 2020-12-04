@@ -167,15 +167,21 @@ input::placeholder {
     position: absolute;
     bottom:5px;
     right:5px;
-    line-height:32px;
-    background: linear-gradient(to bottom, #E83A3A 0%, #B42626 100%);
+    width:28px;
+    height:28px;
+    background: url("./remove.png") center center/auto 28px no-repeat;
+    opacity:0.35;
     color:#EEE;
-    padding:5px;
     font-size:1.25rem;
     box-sizing: border-box;
     text-align: center;
     vertical-align: middle;
     z-index:30;
+}
+
+.ingredient__delete:hover {
+    opacity: 1;
+    cursor: pointer;
 }
 
 .ingredient__units {
