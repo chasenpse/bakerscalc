@@ -16,7 +16,6 @@ const Ingredient = ({
     handleHydrationUpdate,
     handleRemoveIngredient,
     }) => {
-
     return (
         <div className={"ingredient"}>
             <div className={"ingredient__handle"} />

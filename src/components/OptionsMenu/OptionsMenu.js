@@ -10,7 +10,7 @@ const OptionsMenu = ({options, visible, onMenuBtnClick, onOptionChange}) => {
             return (
                 <div className={"overlay"}>
                     <div className={"options-container"}>
-                        <CloseMenuBtn onMenuBtnClick={onMenuBtnClick} />
+                        <CloseMenuBtn  onMenuBtnClick={onMenuBtnClick} />
                         <h1>BakersCalc</h1>
                         <div className={"options-list"}>
                             {

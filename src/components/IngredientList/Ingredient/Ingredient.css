@@ -12,9 +12,9 @@
     border-bottom:1px solid rgba(0,0,0,0.5);
 }
 
-.ingredient:last-of-type {
-    margin-bottom:170px;
-}
+/*.ingredient:last-of-type {*/
+/*    margin-bottom:170px;*/
+/*}*/
 
 .ingredient input, select {
     background:none;
@@ -238,9 +238,5 @@ input::placeholder {
         border-radius:7px;
         height: 32px;
         padding:0 10px;
-    }
-    .ingredient__delete {
-        top: 5px;
-        bottom: unset;
     }
 }

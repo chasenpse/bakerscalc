@@ -6,11 +6,19 @@
     border:0;
     color:#fff;
     width:100%;
+    margin:0 10px;
     padding:0;
     vertical-align: text-bottom;
     text-align: center;
+    -webkit-overflow-scrolling: touch;
 }
 
 .title::placeholder {
     color:rgba(255,255,255,0.5);
+}
+
+@media screen and (max-width: 820px) {
+    .title {
+        font-size:1.6em;
+    }
 }

@@ -1,11 +1,9 @@
 import React from 'react';
 import './Title.css';
-// import updateInputWidth from 'update-input-width';
 
-const Title = ({onNotesBtnClick}) => {
-    // const el = document.getElementById("formulaTitle");
+const Title = ({title, handleTitleUpdate}) => {
     return (
-        <input className="title" id="formulaTitle" type={"text"} placeholder={"Untitled Formula"} />
+        <input className="title" id="formulaTitle" type={"text"} value={title} placeholder={"Untitled Formula"} onChange={e=>handleTitleUpdate(e.target.value)} />
     )
 }
 

@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './App.css';
 import Header from './components/Header/Header';
 import OptionsMenu from "./components/OptionsMenu/OptionsMenu";
 import DoughStatsList from './components/DoughStatsList/DoughStatsList';
 import IngredientList from "./components/IngredientList/IngredientList";
+import CreateDate from "./components/CreateDate/CreateDate";
 import AddBtn from "./components/AddBtn/AddBtn";
+import {setWeight} from "./utils/setWeight";
 
 class App extends Component {
-
-    oz = 28.349523125;
-    lb = 453.59237;
-    kg = 1000;
 
     constructor(props) {
         super(props);
         this.state = {
-            formulaTitle: '',
-            createDate: '',
+            title: '',
+            createDate: null,
             ingredients: [],
             totalWeight: 0,
             ballWeight: 0,
@@ -58,16 +57,16 @@ class App extends Component {
                 },
                 calcMode: {
                     label: 'calc mode',
-                    value: 'baker\'s percentage',
+                    value: "baker's percentage",
                     group: 'global',
                     type: 'select',
-                    data: ['baker\'s percentage', 'thickness factor'],
+                    data: ["baker's percentage", "thickness factor"],
                     position: 5
                 },
                 ballWeight: {
                     label: 'ball weight',
                     value: 453.59,
-                    group: 'baker\'s percentage',
+                    group: "baker's percentage",
                     type: 'input',
                     position: 6
                 },
@@ -112,6 +111,55 @@ class App extends Component {
         }
     }
 
+    apiUrl = 'http://localhost:5000';
+
+    async componentDidMount() {
+        const id = this.props.match.params.id || null;
+        if (id) {
+            const result = await axios.get(`${this.apiUrl}/${id}`);
+            if (result.data) {
+                const ingredients = JSON.parse(result.data.ingredients);
+                this.setState(prevState => ({
+                    title: result.data.title,
+                    createDate: result.data.createDate,
+                    options: {...prevState.options,
+                        numOfDoughBalls: {...prevState.options.numOfDoughBalls, value:result.data.numOfDoughBalls},
+                        displayUnits: {...prevState.options.displayUnits, value:result.data.displayUnits},
+                        bowlResiduePercent: {...prevState.options.bowlResiduePercent, value:result.data.bowlResiduePercent},
+                        precision: {...prevState.options.precision, value:result.data.precision},
+                        calcMode: {...prevState.options.calcMode, value:result.data.calcMode},
+                        ballWeight: {...prevState.options.ballWeight, value:result.data.ballWeight},
+                        thicknessFactor: {...prevState.options.thicknessFactor, value:result.data.thicknessFactor},
+                        panShape: {...prevState.options.panShape, value:result.data.panShape},
+                        panDiameter: {...prevState.options.panDiameter, value:result.data.panDiameter},
+                        panLength: {...prevState.options.panLength, value:result.data.panLength},
+                        panWidth: {...prevState.options.panWidth, value:result.data.panWidth}},
+                    ingredients
+                }), this.calcWeight)
+            }
+        }
+    }
+
+    saveBtnClick = async () => {
+        const data = {
+            title: this.state.title,
+            numOfDoughBalls: this.state.options.numOfDoughBalls.value,
+            displayUnits: this.state.options.displayUnits.value,
+            bowlResiduePercent: this.state.options.bowlResiduePercent.value,
+            precision: this.state.options.precision.value,
+            calcMode: this.state.options.calcMode.value,
+            ballWeight: this.state.options.ballWeight.value,
+            thicknessFactor: this.state.options.thicknessFactor.value,
+            panShape: this.state.options.panShape.value,
+            panDiameter: this.state.options.panDiameter.value,
+            panLength: this.state.options.panLength.value,
+            panWidth: this.state.options.panWidth.value,
+            ingredients: this.state.ingredients,
+        };
+        const result = await axios.post(`${this.apiUrl}`, {...data});
+        this.props.history.push(`/${result.data.id}`);
+    }
+
     addIngredient = () => {
         const ingredient = {
             name: '',
@@ -122,6 +170,8 @@ class App extends Component {
         }
         this.setState({ingredients: [...this.state.ingredients, ingredient]});
     }
+
+    handleTitleUpdate = (val) => this.setState({title: val});
 
     handleNameUpdate = (id,val) => {
         this.setState(prevState => ({
@@ -134,9 +184,9 @@ class App extends Component {
     handlePercentUpdate = (id,val) => {
         this.setState(prevState => ({
             ingredients: prevState.ingredients.map((ingredient, i) =>
-                i === id ? { ...ingredient, percent: val } : ingredient
+                i === id ? { ...ingredient, percent: Number(val) } : ingredient
             ),
-        }), () => this.calculate());
+        }), () => this.calcWeight());
     }
 
     handleTypeUpdate = (id,val) => {
@@ -144,21 +194,21 @@ class App extends Component {
             ingredients: prevState.ingredients.map((ingredient, i) =>
                 i === id ? { ...ingredient, type: val } : ingredient
             ),
-        }), () => this.calculate());
+        }), () => this.calcWeight());
     }
 
     handleHydrationUpdate = (id,val) => {
         this.setState(prevState => ({
             ingredients: prevState.ingredients.map((ingredient, i) =>
-                i === id ? { ...ingredient, hydration: val } : ingredient
+                i === id ? { ...ingredient, hydration: Number(val) } : ingredient
             ),
-        }), () => this.calculate());
+        }), () => this.calcWeight());
     }
 
     handleRemoveIngredient = (id) => {
         this.setState(prevState => ({
             ingredients: prevState.ingredients.filter((ingredient, i)=>i!==id)
-        }), () => this.calculate());
+        }), () => this.calcWeight());
     }
 
     updateOption = (id, type, val) => {
@@ -171,12 +221,11 @@ class App extends Component {
                                 ...prevState.options[id], value: Number(val)
                             }
                         }
-                    }), () => this.calculate()
+                    }), () => this.calcWeight()
                 );
                 break;
             default:
                 if (id === "displayUnits") {
-                    console.log("wow");
                     this.setState(
                         prevState => ({
                             options: {
@@ -184,8 +233,8 @@ class App extends Component {
                                     ...prevState.options[id], value: val
                                 }
                             }
-                        }), () => this.calculate());
-                    break;
+                        }), () => this.calcWeight()
+                    );
                 } else {
                     this.setState(
                         prevState => ({
@@ -194,24 +243,10 @@ class App extends Component {
                                     ...prevState.options[id], value: val
                                 }
                             }
-                        }), () => this.calculate()
+                        }), () => this.calcWeight()
                     );
-                    break;
                 }
-        }
-    }
-
-    setWeight = (w,u) => {
-        switch (u) {
-            case 'oz':
-                return Number(w/this.oz);
-            case 'lb':
-                return Number(w/this.lb);
-            case 'kg':
-                return Number(w/this.kg);
-            default:
-                return Number(w);
-
+                break;
         }
     }
 
@@ -241,8 +276,7 @@ class App extends Component {
     }
 
     updateDSHydration = () => {
-        const hydration = this.getTotalFlourPercent() !== 0 ? this.getTotalWaterPercent() / this.getTotalFlourPercent() * 100 : this.getTotalWaterPercent();
-        this.setState({hydration: hydration});
+        this.setState({hydration: this.getHydration()});
     }
 
     updateDoughStats = () => {
@@ -252,68 +286,70 @@ class App extends Component {
         this.updateDSHydration();
     }
 
-    calculate = () => {
-        const { numOfDoughBalls, bowlResiduePercent, ballWeight, displayUnits } = this.state.options;
-        const totalWeight = (ballWeight.value * numOfDoughBalls.value) * (1 + bowlResiduePercent.value / 100); // ball weight * num balls * residue
-        const assumedFlourWeight = (totalWeight * 100) / this.getTotalPercent();
-
-        this.setState(prevState => ({
-            ingredients: prevState.ingredients.map(ingredient =>
-                ({...ingredient,
-                    "weight": this.getTotalPercent() >= 100 ?
-                        this.setWeight(ingredient.percent / 100 * assumedFlourWeight, displayUnits.value)
-                        : this.setWeight(ingredient.percent / 100 * totalWeight, displayUnits.value)})
-            )
-        }), () => this.updateDoughStats());
-    }
-
-    // returns total flour as percent
-    // if != 100 then the formula contains errors
+    // returns total flour as percent if != 100 then the formula contains errors
     getTotalFlourPercent = () => {
-        let total = 0;
-        for (let i of this.state.ingredients) {
+        return this.state.ingredients.reduce((total, i) => {
             switch(i.type) {
                 case "flour":
-                    total += Number(i.percent);
+                    total += i.percent;
                     break;
                 case "starter":
-                    let starterWater = Number(i.hydration) / 2 * (Number(i.percent) / 100);
-                    let starterFlour = Number(i.percent) - starterWater;
+                    let starterWater = i.hydration / 2 * (i.percent / 100);
+                    let starterFlour = i.percent - starterWater;
                     total += starterFlour;
                     break;
                 default:
                     break;
             }
-        }
-        return Number(total.toFixed(this.state.options.precision.value));
+            return total;
+        },0);
     }
 
     // returns total water as percent
     getTotalWaterPercent = () => {
-        let total = 0;
-        for (let i of this.state.ingredients) {
+        return this.state.ingredients.reduce((total,i) => {
             switch(i.type) {
                 case "none":
                 case "liquid":
-                    total += (Number(i.hydration) * Number(i.percent)) / 100;
+                    total += (i.hydration * i.percent) / 100;
                     break;
                 case "starter":
-                    total += (Number(i.hydration) / 2 * Number(i.percent)) / 100;
+                    total += (i.hydration / 2 * i.percent) / 100;
                     break;
                 default:
                     break;
             }
-        }
-        return Number(total.toFixed(this.state.options.precision.value));
+            return total;
+        },0);
     }
 
     // returns total percent based on ingredient percentages
-    getTotalPercent = () => {
-        let total = 0;
-        for (let i of this.state.ingredients) {
-            total += Number(i.percent);
-        }
-        return Number(total.toFixed(this.state.options.precision.value));
+    getTotalPercent = () => this.state.ingredients.reduce((acc,curr) => acc += Number(curr.percent),0);
+
+    getHydration = () => this.getTotalFlourPercent() !== 0 ? this.getTotalWaterPercent() / this.getTotalFlourPercent() * 100 : this.getTotalWaterPercent();
+
+    getThicknessFactorWeight = () => {
+        // thicknessFactorWeight(oz) = area * thicknessFactor
+        const panShape = this.state.options.panShape.value;
+        const tf = this.state.options.thicknessFactor.value;
+        const area = panShape === "circular" ?
+            Math.PI * ((this.state.options.panDiameter.value / 2)**2) :
+            this.state.options.panLength.value * this.state.options.panWidth.value;
+        return setWeight('oz',this.state.options.displayUnits.value,area * tf);
+    }
+
+    calcWeight = () => {
+        const { numOfDoughBalls, bowlResiduePercent, ballWeight } = this.state.options;
+        const tmp = this.state.options.calcMode.value === "baker's percentage" ? ballWeight.value : this.getThicknessFactorWeight(); // check calc mode
+        const totalWeight = (tmp * numOfDoughBalls.value) * (1 + bowlResiduePercent.value / 100); // (ball weight * num balls) * residue
+        const assumedFlourWeight = (totalWeight * 100) / this.getTotalPercent(); // used when totalPercent < 100
+
+        this.setState(prevState => ({
+            ingredients: prevState.ingredients.map(ingredient =>
+                ({...ingredient,
+                    "weight": this.getTotalPercent() >= 100 ? ingredient.percent / 100 * assumedFlourWeight : ingredient.percent / 100 * totalWeight})
+            )
+        }), () => this.updateDoughStats());
     }
 
     toggleMenuClick = () => {
@@ -322,16 +358,8 @@ class App extends Component {
         }));
     }
 
-    notesBtnClick = () => {
-        console.log('notesBtnClick');
-    }
-
-    saveBtnClick = () => {
-        console.log('saveBtnClick');
-    }
-
     render() {
-        const { totalWeight, ballWeight, totalPercent, totalFlour, hydration, ingredients, options, optionsVisible } = this.state;
+        const { totalWeight, ballWeight, totalPercent, totalFlour, hydration, ingredients, options, optionsVisible, title, createDate } = this.state;
         const precision = this.state.options.precision.value;
         const displayUnits = this.state.options.displayUnits.value;
         return (
@@ -340,6 +368,8 @@ class App extends Component {
                     onMenuBtnClick={this.toggleMenuClick}
                     onNotesBtnClick={this.notesBtnClick}
                     onSaveBtnClick={this.saveBtnClick}
+                    title={title}
+                    handleTitleUpdate={this.handleTitleUpdate}
                 />
                 <OptionsMenu
                     options={options}
@@ -362,6 +392,7 @@ class App extends Component {
                     handleRemoveIngredient={this.handleRemoveIngredient}
                     precision={precision}
                 />
+                <CreateDate date={createDate} />
                 <AddBtn addIngredient={this.addIngredient} />
             </div>
         );

@@ -3,7 +3,7 @@ import './SaveBtn.css'
 
 const SaveBtn = ({onSaveBtnClick}) => {
     return(
-        <button id="saveBtn" type={"button"} onClick={onSaveBtnClick}></button>
+        <button id="saveBtn" type={"button"} onClick={onSaveBtnClick} />
     );
 }
 

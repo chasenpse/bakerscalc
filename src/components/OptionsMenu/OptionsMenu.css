@@ -12,9 +12,9 @@
     position: absolute;
     top:0;
     left:0;
-    overflow: auto;
+    overflow-y: auto;
     background: linear-gradient(to bottom, #feba59 0%, #fcaa4a 100%);
-    width:500px;
+    width:550px;
     height:100vh;
     z-index: 70;
 }
@@ -28,7 +28,7 @@
 h1 {
     position: relative;
     z-index:71;
-    width:500px;
+    width:100%;
     text-align: center;
     top:70px;
     font-size:3rem;
