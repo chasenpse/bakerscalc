@@ -12,10 +12,6 @@
     border-bottom:1px solid rgba(0,0,0,0.5);
 }
 
-/*.ingredient:last-of-type {*/
-/*    margin-bottom:170px;*/
-/*}*/
-
 .ingredient input, select {
     background:none;
     border:0;
@@ -33,7 +29,7 @@
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
-    padding: 0 0 0 48px;
+    padding: 0 0 0 20px;
 }
 
 .ingredient__name {
@@ -195,7 +191,7 @@ input::placeholder {
     .ingredient__properties {
         display:block;
         background: #F2F2F2;
-        padding: 5px 0 0 32px;
+        padding: 5px 0 0 0px;
     }
     .ingredient__name, .ingredient__percent, .ingredient__type, .ingredient__hydration {
         padding: 2px 0 0 10px;
@@ -225,6 +221,7 @@ input::placeholder {
         height:unset;
         border-top-right-radius: 0;
         border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
         color:#000;
         background: linear-gradient(to bottom, #feba59 0%, #fcaa4a 100%);
         box-sizing: border-box;
