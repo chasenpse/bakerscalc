@@ -18,6 +18,7 @@ dev.js
 .env.development.local
 .env.test.local
 .env.production.local
+.env.development
 /.idea
 
 npm-debug.log*

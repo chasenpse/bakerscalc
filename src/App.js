@@ -90,6 +90,7 @@ class App extends Component {
                     label: 'pan diameter',
                     value: 14,
                     group: 'thickness factor',
+                    subgroup: 'circular',
                     type: 'input',
                     position: 9
                 },
@@ -97,6 +98,7 @@ class App extends Component {
                     label: 'pan length',
                     value: 9,
                     group: 'thickness factor',
+                    subgroup: 'rectangular',
                     type: 'input',
                     position: 10
                 },
@@ -104,6 +106,7 @@ class App extends Component {
                     label: 'pan width',
                     value: 13,
                     group: 'thickness factor',
+                    subgroup: 'rectangular',
                     type: 'input',
                     position: 11
                 }
@@ -111,14 +114,11 @@ class App extends Component {
         }
     }
 
-    apiUrl = 'http://localhost:5000';
-
     async componentDidMount() {
         const id = this.props.match.params.id || null;
         if (id) {
-            const result = await axios.get(`${this.apiUrl}/${id}`);
+            const result = await axios.get(`${process.env.REACT_APP_BC_API}/${id}`);
             if (result.data) {
-                const ingredients = JSON.parse(result.data.ingredients);
                 this.setState(prevState => ({
                     title: result.data.title,
                     createDate: result.data.createDate,
@@ -134,7 +134,7 @@ class App extends Component {
                         panDiameter: {...prevState.options.panDiameter, value:result.data.panDiameter},
                         panLength: {...prevState.options.panLength, value:result.data.panLength},
                         panWidth: {...prevState.options.panWidth, value:result.data.panWidth}},
-                    ingredients
+                    ingredients: result.data.ingredients,
                 }), this.calcWeight)
             }
         }
@@ -156,7 +156,7 @@ class App extends Component {
             panWidth: this.state.options.panWidth.value,
             ingredients: this.state.ingredients,
         };
-        const result = await axios.post(`${this.apiUrl}`, {...data});
+        const result = await axios.post(`${process.env.REACT_APP_BC_API}`, {...data});
         this.props.history.push(`/${result.data.id}`);
     }
 

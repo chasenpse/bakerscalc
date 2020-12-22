@@ -5,6 +5,6 @@ const weights = {
     kg: 1000
 }
 
-export const setWeight = (i, o, u) => {
-    return (u * weights[i] / weights[o]);
+export const setWeight = (i, o, w) => {
+    return (w * weights[i] / weights[o]);
 }

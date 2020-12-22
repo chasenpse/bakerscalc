@@ -4,9 +4,25 @@ import './OptionsMenu.css'
 import CloseMenuBtn from "./CloseMenuBtn/CloseMenuBtn";
 
 const OptionsMenu = ({options, visible, onMenuBtnClick, onOptionChange}) => {
+    const getOptions = options => {
+        const orderedOptions = Object.entries(options).sort((a,b) => a[1].position-b[1].position);
+        return orderedOptions.filter(o => {
+            if (o[1].group === 'global') {
+                return true;
+            } else if (o[1].group === options.calcMode.value) {
+                if (!o[1].subgroup) {
+                    return true;
+                } else if (o[1].subgroup === options.panShape.value) {
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+
     switch(visible) {
         case true:
-            const orderedOptions = Object.entries(options).sort((a,b) => a[1].position-b[1].position);
+
             return (
                 <div className={"overlay"}>
                     <div className={"options-container"}>
@@ -14,11 +30,10 @@ const OptionsMenu = ({options, visible, onMenuBtnClick, onOptionChange}) => {
                         <h1>BakersCalc</h1>
                         <div className={"options-list"}>
                             {
-                                orderedOptions.map((option, i) => {
-                                    if (option[1].group === 'global' || option[1].group === options.calcMode.value) {
+                                getOptions(options).map((option) => {
                                         return (
                                             <Option
-                                                key={i}
+                                                key={option[0]}
                                                 id={option[0]}
                                                 label={option[1].label}
                                                 value={option[1].value}
@@ -29,9 +44,6 @@ const OptionsMenu = ({options, visible, onMenuBtnClick, onOptionChange}) => {
                                                 onOptionChange={onOptionChange}
                                             />
                                         )
-                                    } else {
-                                        return null;
-                                    }
                                 })
                             }
                         </div>
