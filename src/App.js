@@ -110,32 +110,39 @@ class App extends Component {
                     type: 'input',
                     position: 11
                 }
-            }
+            },
+            loading: false,
         }
     }
 
     async componentDidMount() {
         const id = this.props.match.params.id || null;
         if (id) {
-            const result = await axios.get(`${process.env.REACT_APP_BC_API}/${id}`);
-            if (result.data) {
-                this.setState(prevState => ({
-                    title: result.data.title,
-                    createDate: result.data.createDate,
-                    options: {...prevState.options,
-                        numOfDoughBalls: {...prevState.options.numOfDoughBalls, value:result.data.numOfDoughBalls},
-                        displayUnits: {...prevState.options.displayUnits, value:result.data.displayUnits},
-                        bowlResiduePercent: {...prevState.options.bowlResiduePercent, value:result.data.bowlResiduePercent},
-                        precision: {...prevState.options.precision, value:result.data.precision},
-                        calcMode: {...prevState.options.calcMode, value:result.data.calcMode},
-                        ballWeight: {...prevState.options.ballWeight, value:result.data.ballWeight},
-                        thicknessFactor: {...prevState.options.thicknessFactor, value:result.data.thicknessFactor},
-                        panShape: {...prevState.options.panShape, value:result.data.panShape},
-                        panDiameter: {...prevState.options.panDiameter, value:result.data.panDiameter},
-                        panLength: {...prevState.options.panLength, value:result.data.panLength},
-                        panWidth: {...prevState.options.panWidth, value:result.data.panWidth}},
-                    ingredients: result.data.ingredients,
-                }), this.calcWeight)
+            this.setState({loading: true});
+            try {
+                const result = await axios.get(`${process.env.REACT_APP_BC_API}/${id}`);
+                if (result.data) {
+                    this.setState(prevState => ({
+                        title: result.data.title,
+                        createDate: result.data.createDate,
+                        options: {...prevState.options,
+                            numOfDoughBalls: {...prevState.options.numOfDoughBalls, value:result.data.numOfDoughBalls},
+                            displayUnits: {...prevState.options.displayUnits, value:result.data.displayUnits},
+                            bowlResiduePercent: {...prevState.options.bowlResiduePercent, value:result.data.bowlResiduePercent},
+                            precision: {...prevState.options.precision, value:result.data.precision},
+                            calcMode: {...prevState.options.calcMode, value:result.data.calcMode},
+                            ballWeight: {...prevState.options.ballWeight, value:result.data.ballWeight},
+                            thicknessFactor: {...prevState.options.thicknessFactor, value:result.data.thicknessFactor},
+                            panShape: {...prevState.options.panShape, value:result.data.panShape},
+                            panDiameter: {...prevState.options.panDiameter, value:result.data.panDiameter},
+                            panLength: {...prevState.options.panLength, value:result.data.panLength},
+                            panWidth: {...prevState.options.panWidth, value:result.data.panWidth}},
+                        ingredients: result.data.ingredients,
+                        loading: false,
+                    }), this.calcWeight)
+                }
+            } catch (e) {
+                this.setState({loading: false});
             }
         }
     }
@@ -156,8 +163,12 @@ class App extends Component {
             panWidth: this.state.options.panWidth.value,
             ingredients: this.state.ingredients,
         };
-        const result = await axios.post(`${process.env.REACT_APP_BC_API}`, {...data});
-        this.props.history.push(`/${result.data.id}`);
+        try {
+            const result = await axios.post(`${process.env.REACT_APP_BC_API}`, {...data});
+            this.props.history.push(`/${result.data.id}`);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     addIngredient = () => {
@@ -359,14 +370,16 @@ class App extends Component {
     }
 
     render() {
-        const { totalWeight, ballWeight, totalPercent, totalFlour, hydration, ingredients, options, optionsVisible, title, createDate } = this.state;
+        const { totalWeight, ballWeight, totalPercent, totalFlour, hydration, ingredients, options, optionsVisible, title, createDate, loading } = this.state;
+        if (loading) {
+            return <div className={"loading"}>Loading formula...</div>
+        }
         const precision = this.state.options.precision.value;
         const displayUnits = this.state.options.displayUnits.value;
         return (
             <div className={"App"}>
                 <Header
                     onMenuBtnClick={this.toggleMenuClick}
-                    onNotesBtnClick={this.notesBtnClick}
                     onSaveBtnClick={this.saveBtnClick}
                     title={title}
                     handleTitleUpdate={this.handleTitleUpdate}
