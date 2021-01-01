@@ -2,9 +2,9 @@
 
 This is the frontend app for BakersCalc.
 
-**Note:** This project can be run without an api, although saving and restoring functionality will not work.
+**Note:** This project can be run without access to the bakerscalc api, although saving and restoring functionality will not work.
 
-Use `npm i` to install the dependencies and `npm start` to run the app. It should now be available on [localhost:3000](localhost:3000)!
+Use `npm i` to install the dependencies and `npm start` to run the app. It should now be available on [localhost:3000](http://localhost:3000)!
 
 ![app preview with pizza dough recipe](./screenshots/1.png)
 
