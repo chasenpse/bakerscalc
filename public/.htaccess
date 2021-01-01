@@ -1,0 +1,2 @@
+Allow from all
+FallbackResource ./index.html
