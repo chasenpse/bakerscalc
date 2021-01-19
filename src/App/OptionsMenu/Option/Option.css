@@ -28,7 +28,7 @@
     -ms-appearance: none;
     -o-appearance: none;
     appearance: none;
-    background-image: url("../../../assets/dropdownArrow.png");
+    background-image: url("../../dropdownArrow.png");
     background-repeat: no-repeat;
     background-size: 0.8rem auto;
     background-position: right 6px  top 10px;

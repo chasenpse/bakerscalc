@@ -83,7 +83,7 @@ input::placeholder {
     -ms-appearance: none;
     -o-appearance: none;
     appearance: none;
-    background-image: url("../../../assets/dropdownArrow.png");
+    background-image: url("../../dropdownArrow.png");
     background-repeat: no-repeat;
     background-size: 0.8rem auto;
     background-position: right 10px;
@@ -137,7 +137,7 @@ input::placeholder {
 }
 
 .ingredient:hover .ingredient__handle {
-    background: url("./drag.png") center center/40% auto no-repeat, #ABA9AA;
+    background: url("drag.png") center center/40% auto no-repeat, #ABA9AA;
 }
 
 .ingredient__weight {
@@ -165,7 +165,7 @@ input::placeholder {
     right:5px;
     width:28px;
     height:28px;
-    background: url("./remove.png") center center/auto 28px no-repeat;
+    background: url("remove.png") center center/auto 28px no-repeat;
     opacity:0.35;
     color:#EEE;
     font-size:1.25rem;

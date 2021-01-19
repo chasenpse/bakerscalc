@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
-import Header from './components/Header/Header';
-import OptionsMenu from "./components/OptionsMenu/OptionsMenu";
-import DoughStatsList from './components/DoughStatsList/DoughStatsList';
-import IngredientList from "./components/IngredientList/IngredientList";
-import CreateDate from "./components/CreateDate/CreateDate";
-import AddBtn from "./components/AddBtn/AddBtn";
-import {setWeight} from "./utils/setWeight";
+import Header from './Header/Header';
+import OptionsMenu from "./OptionsMenu/OptionsMenu";
+import DoughStatsList from './DoughStatsList/DoughStatsList';
+import IngredientList from "./IngredientList/IngredientList";
+import CreateDate from "./CreateDate/CreateDate";
+import AddBtn from "./AddBtn/AddBtn";
+import {setWeight} from "../utils/setWeight";
 
 class App extends Component {
 

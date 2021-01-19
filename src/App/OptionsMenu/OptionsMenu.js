@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Option from "./Option/Option";
 import './OptionsMenu.css'
 import CloseMenuBtn from "./CloseMenuBtn/CloseMenuBtn";
@@ -46,6 +47,7 @@ const OptionsMenu = ({options, visible, onMenuBtnClick, onOptionChange}) => {
                                         )
                                 })
                             }
+                            <Link to={"/help"} target={"_blank"}>Help</Link>
                         </div>
                     </div>
                 </div>
