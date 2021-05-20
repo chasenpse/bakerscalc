@@ -6,26 +6,27 @@ const IngredientList = ({ingredients, units, handleNameUpdate, handlePercentUpda
     return (
         <div className={"ingredient-list"}>
             {
-                ingredients.map((ingredient, i) => {
-                    return(
-                        <Ingredient
-                            key={i}
-                            id={i}
-                            name={ingredient.name}
-                            percent={ingredient.percent}
-                            type={ingredient.type}
-                            hydration={ingredient.hydration}
-                            weight={ingredient.weight}
-                            units={units}
-                            handleNameUpdate={handleNameUpdate}
-                            handlePercentUpdate={handlePercentUpdate}
-                            handleTypeUpdate={handleTypeUpdate}
-                            handleHydrationUpdate={handleHydrationUpdate}
-                            handleRemoveIngredient={handleRemoveIngredient}
-                            precision={precision}
-                        />
-                    )
-                })
+                ingredients.length ?
+                    ingredients.map((ingredient, i) => {
+                        return(
+                            <Ingredient
+                                key={i}
+                                id={i}
+                                name={ingredient.name}
+                                percent={ingredient.percent}
+                                type={ingredient.type}
+                                hydration={ingredient.hydration}
+                                weight={ingredient.weight}
+                                units={units}
+                                handleNameUpdate={handleNameUpdate}
+                                handlePercentUpdate={handlePercentUpdate}
+                                handleTypeUpdate={handleTypeUpdate}
+                                handleHydrationUpdate={handleHydrationUpdate}
+                                handleRemoveIngredient={handleRemoveIngredient}
+                                precision={precision}
+                            />
+                        )
+                    }) : <div className={"placeholder"}>Use the <span className={"addHl"}>+</span> button to start adding ingredients</div>
             }
         </div>
     );

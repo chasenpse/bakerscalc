@@ -11,108 +11,105 @@ import {setWeight} from "../utils/setWeight";
 
 class App extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: '',
-            createDate: null,
-            ingredients: [],
-            totalWeight: 0,
-            ballWeight: 0,
-            totalPercent: 0,
-            totalFlour: 0,
-            hydration: 0,
-            optionsVisible: false,
-            options: {
-                numOfDoughBalls: {
-                    label: '# of balls',
-                    value: 1,
-                    group: 'global',
-                    type: 'input',
-                    min: 1,
-                    position: 1
-                },
-                displayUnits: {
-                    label: 'display units',
-                    value: 'g',
-                    group: 'global',
-                    type: 'select',
-                    data: ['g', 'oz', 'lb', 'kg'],
-                    position: 2
-                },
-                bowlResiduePercent: {
-                    label: 'bowl residue percent',
-                    value: 0,
-                    group: 'global',
-                    type: 'input',
-                    step: 0.01,
-                    position: 3
-                },
-                precision: {
-                    label: 'precision',
-                    value: 2,
-                    group: 'global',
-                    type: 'input',
-                    position: 4
-                },
-                calcMode: {
-                    label: 'calc mode',
-                    value: "baker's percentage",
-                    group: 'global',
-                    type: 'select',
-                    data: ["baker's percentage", "thickness factor"],
-                    position: 5
-                },
-                ballWeight: {
-                    label: 'ball weight',
-                    value: 453.59,
-                    group: "baker's percentage",
-                    type: 'input',
-                    position: 6
-                },
-                thicknessFactor: {
-                    label: 'thickness factor',
-                    value: 0.1,
-                    group: 'thickness factor',
-                    type: 'input',
-                    step: 0.001,
-                    position: 7
-                },
-                panShape: {
-                    label: 'pan shape',
-                    value: 'circular',
-                    group: 'thickness factor',
-                    type: 'select',
-                    data: ['circular', 'rectangular'],
-                    position: 8
-                },
-                panDiameter: {
-                    label: 'pan diameter',
-                    value: 14,
-                    group: 'thickness factor',
-                    subgroup: 'circular',
-                    type: 'input',
-                    position: 9
-                },
-                panLength: {
-                    label: 'pan length',
-                    value: 9,
-                    group: 'thickness factor',
-                    subgroup: 'rectangular',
-                    type: 'input',
-                    position: 10
-                },
-                panWidth: {
-                    label: 'pan width',
-                    value: 13,
-                    group: 'thickness factor',
-                    subgroup: 'rectangular',
-                    type: 'input',
-                    position: 11
-                }
+    state = {
+        title: '',
+        createDate: null,
+        ingredients: [],
+        totalWeight: 0,
+        ballWeight: 0,
+        totalPercent: 0,
+        totalFlour: 0,
+        hydration: 0,
+        optionsVisible: false,
+        options: {
+            numOfDoughBalls: {
+                label: '# of balls',
+                value: 1,
+                group: 'global',
+                type: 'input',
+                min: 1,
+                position: 1
             },
-            loading: false,
-        }
+            displayUnits: {
+                label: 'display units',
+                value: 'g',
+                group: 'global',
+                type: 'select',
+                data: ['g', 'oz', 'lb', 'kg'],
+                position: 2
+            },
+            bowlResiduePercent: {
+                label: 'bowl residue percent',
+                value: 0,
+                group: 'global',
+                type: 'input',
+                step: 0.01,
+                position: 3
+            },
+            precision: {
+                label: 'precision',
+                value: 2,
+                group: 'global',
+                type: 'input',
+                position: 4
+            },
+            calcMode: {
+                label: 'calc mode',
+                value: "baker's percentage",
+                group: 'global',
+                type: 'select',
+                data: ["baker's percentage", "thickness factor"],
+                position: 5
+            },
+            ballWeight: {
+                label: 'ball weight',
+                value: 453.59,
+                group: "baker's percentage",
+                type: 'input',
+                position: 6
+            },
+            thicknessFactor: {
+                label: 'thickness factor',
+                value: 0.1,
+                group: 'thickness factor',
+                type: 'input',
+                step: 0.001,
+                position: 7
+            },
+            panShape: {
+                label: 'pan shape',
+                value: 'circular',
+                group: 'thickness factor',
+                type: 'select',
+                data: ['circular', 'rectangular'],
+                position: 8
+            },
+            panDiameter: {
+                label: 'pan diameter',
+                value: 14,
+                group: 'thickness factor',
+                subgroup: 'circular',
+                type: 'input',
+                position: 9
+            },
+            panLength: {
+                label: 'pan length',
+                value: 9,
+                group: 'thickness factor',
+                subgroup: 'rectangular',
+                type: 'input',
+                position: 10
+            },
+            panWidth: {
+                label: 'pan width',
+                value: 13,
+                group: 'thickness factor',
+                subgroup: 'rectangular',
+                type: 'input',
+                position: 11
+            }
+        },
+        loading: false,
     }
 
     async componentDidMount() {
