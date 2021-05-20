@@ -26,7 +26,7 @@ const IngredientList = ({ingredients, units, handleNameUpdate, handlePercentUpda
                                 precision={precision}
                             />
                         )
-                    }) : <div className={"placeholder"}>Use the <span className={"addHl"}>+</span> button to start adding ingredients</div>
+                    }) : <div className={"placeholder"}>Use <span className={"addHl"}>+</span> to start adding ingredients</div>
             }
         </div>
     );
