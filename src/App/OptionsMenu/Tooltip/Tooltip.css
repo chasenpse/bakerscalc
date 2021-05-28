@@ -1,0 +1,22 @@
+.tooltip__copy {
+    max-width:350px;
+    position: absolute;
+    box-sizing: border-box;
+    color:#EEE;
+    font-weight:normal;
+    font-size:1rem;
+    line-height:initial;
+    z-index: 80;
+    background:#1A1919;
+    padding: 4px 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.tooltip__copy p {
+    margin-bottom:1rem;
+}
+
+.tooltip__copy p:last-of-type {
+    margin-bottom:0;
+}

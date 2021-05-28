@@ -42,6 +42,7 @@ const OptionsMenu = ({options, visible, onMenuBtnClick, onOptionChange}) => {
                                                 min={option[1].min || 0}
                                                 step={option[1].step || 1}
                                                 onOptionChange={onOptionChange}
+                                                tooltip={option[1].tooltip}
                                             />
                                         )
                                 })

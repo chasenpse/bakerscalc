@@ -28,7 +28,10 @@ class App extends Component {
                 group: 'global',
                 type: 'input',
                 min: 1,
-                position: 1
+                position: 1,
+                tooltip: [
+                    "Set the number of dough balls the final dough will be divided into"
+                ],
             },
             displayUnits: {
                 label: 'display units',
@@ -36,7 +39,10 @@ class App extends Component {
                 group: 'global',
                 type: 'select',
                 data: ['g', 'oz', 'lb', 'kg'],
-                position: 2
+                position: 2,
+                tooltip: [
+                    "Set the displayed units of measurement for ingredients and dough weights"
+                ],
             },
             bowlResiduePercent: {
                 label: 'bowl residue percent',
@@ -44,14 +50,26 @@ class App extends Component {
                 group: 'global',
                 type: 'input',
                 step: 0.01,
-                position: 3
+                position: 3,
+                tooltip: [
+                    "Set an additional percent based on the total dough weight to compensate for dough left in " +
+                    "the bowl",
+
+                    "For example a recipe with a total weight of 1000g and 1% bowl residue will ultimately weigh " +
+                    "1010g, since each ingredient includes an additional 1%"
+                ],
             },
             precision: {
                 label: 'precision',
                 value: 2,
                 group: 'global',
                 type: 'input',
-                position: 4
+                position: 4,
+                tooltip: [
+                    "Sets the number of decimal places",
+
+                    "0=Whole numbers, 1=tenths, 2=hundredths, etc."
+                ],
             },
             calcMode: {
                 label: 'calc mode',
@@ -59,14 +77,26 @@ class App extends Component {
                 group: 'global',
                 type: 'select',
                 data: ["baker's percentage", "thickness factor"],
-                position: 5
+                position: 5,
+                tooltip: [
+                    "Baker's percentage is a weight based system used to scale dough recipes, where total flour " +
+                    "is always represented as 100% and each ingredient is a percentage based off of that weight. For " +
+                    "example if total flour is 1000g and calls for 60% water, the water weight would equal 600g.",
+
+                    "Thickness factor is a decimal value representing the dough weight per square inch of surface " +
+                    "area and is commonly used with pizza doughs. Typical values range from 0.8 - 0.13, going from " +
+                    "thin to thick, respectively.",
+                ],
             },
             ballWeight: {
                 label: 'ball weight',
                 value: 453.59,
                 group: "baker's percentage",
                 type: 'input',
-                position: 6
+                position: 6,
+                tooltip: [
+                    "Set the desired individual ball weight represented in the display units above"
+                ],
             },
             thicknessFactor: {
                 label: 'thickness factor',
@@ -74,7 +104,12 @@ class App extends Component {
                 group: 'thickness factor',
                 type: 'input',
                 step: 0.001,
-                position: 7
+                position: 7,
+                tooltip: [
+                    "Thickness factor is a decimal value representing the dough weight per square inch of surface " +
+                    "area and is commonly used with pizza doughs. Typical values range from 0.8 - 0.13, going from " +
+                    "thin to thick, respectively."
+                ],
             },
             panShape: {
                 label: 'pan shape',
@@ -82,7 +117,10 @@ class App extends Component {
                 group: 'thickness factor',
                 type: 'select',
                 data: ['circular', 'rectangular'],
-                position: 8
+                position: 8,
+                tooltip: [
+                    "Set the shape of your pan or pizza stone"
+                ],
             },
             panDiameter: {
                 label: 'pan diameter',
@@ -90,7 +128,10 @@ class App extends Component {
                 group: 'thickness factor',
                 subgroup: 'circular',
                 type: 'input',
-                position: 9
+                position: 9,
+                tooltip: [
+                    "Set the diameter of your pan or pizza stone"
+                ],
             },
             panLength: {
                 label: 'pan length',
@@ -98,7 +139,10 @@ class App extends Component {
                 group: 'thickness factor',
                 subgroup: 'rectangular',
                 type: 'input',
-                position: 10
+                position: 10,
+                tooltip: [
+                    "Set the length of your pan or pizza stone"
+                ],
             },
             panWidth: {
                 label: 'pan width',
@@ -106,7 +150,10 @@ class App extends Component {
                 group: 'thickness factor',
                 subgroup: 'rectangular',
                 type: 'input',
-                position: 11
+                position: 11,
+                tooltip: [
+                    "Set the width of your pan or pizza stone"
+                ],
             }
         },
         loading: false,
@@ -177,6 +224,10 @@ class App extends Component {
             weight: 0,
         }
         this.setState({ingredients: [...this.state.ingredients, ingredient]});
+        window.scrollBy({
+            top: document.body.scrollHeight,
+            behavior: "smooth"
+        });
     }
 
     handleTitleUpdate = (val) => this.setState({title: val});

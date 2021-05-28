@@ -16,6 +16,6 @@ button {
 
 @media screen and (max-width: 820px) {
     header {
-        padding:20px 10px;
+        padding:10px;
     }
 }
