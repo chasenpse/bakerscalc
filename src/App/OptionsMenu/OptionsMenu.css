@@ -21,11 +21,7 @@
 }
 
 .options-list {
-    position:relative;
-    overflow: auto;
-    top:80px;
-    left:0;
-    padding-bottom:120px;
+    padding:80px 0 120px 0;
 }
 
 h1 {
@@ -33,7 +29,7 @@ h1 {
     z-index:71;
     width:100%;
     text-align: center;
-    top:70px;
+    top:16px;
     font-size:3rem;
     font-weight:700;
     color: rgba(0,0,0,1);

@@ -8,6 +8,7 @@ import IngredientList from "./IngredientList/IngredientList";
 import CreateDate from "./CreateDate/CreateDate";
 import AddBtn from "./AddBtn/AddBtn";
 import {setWeight} from "../utils/setWeight";
+import Loader from "./Loader/Loader";
 
 class App extends Component {
 
@@ -420,7 +421,7 @@ class App extends Component {
     render() {
         const { totalWeight, ballWeight, totalPercent, totalFlour, hydration, ingredients, options, optionsVisible, title, createDate, loading } = this.state;
         if (loading) {
-            return <div className={"loading"}>Loading formula...</div>
+            return <Loader />
         }
         const precision = this.state.options.precision.value;
         const displayUnits = this.state.options.displayUnits.value;

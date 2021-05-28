@@ -2,6 +2,7 @@ import React from 'react';
 import Option from "./Option/Option";
 import './OptionsMenu.css'
 import CloseMenuBtn from "./CloseMenuBtn/CloseMenuBtn";
+import Footer from "./Footer/Footer";
 
 const OptionsMenu = ({options, visible, onMenuBtnClick, onOptionChange}) => {
     const getOptions = options => {
@@ -48,6 +49,7 @@ const OptionsMenu = ({options, visible, onMenuBtnClick, onOptionChange}) => {
                                 })
                             }
                         </div>
+                        <Footer />
                     </div>
                 </div>
             )

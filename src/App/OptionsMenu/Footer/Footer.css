@@ -1,0 +1,12 @@
+footer {
+    text-align: center;
+    width: 100%;
+    padding-bottom:100px;
+}
+
+footer .gh {
+    display:inline-block;
+    width:32px;
+    height:32px;
+    background: url("gh.png") 0 0/100% auto no-repeat;
+}
