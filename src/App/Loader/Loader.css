@@ -4,7 +4,10 @@
     grid-gap:2px;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    margin:0 auto;
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50% -50%);
 }
 
 .box {
@@ -17,7 +20,7 @@
 
 @keyframes pulse {
     100%{
-        opacity:0.2;
+        opacity:0.1;
     }
 }
 
