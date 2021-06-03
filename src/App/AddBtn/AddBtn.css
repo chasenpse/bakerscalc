@@ -5,11 +5,10 @@
     left:50%;
     margin:0 auto;
     z-index:50;
+    transform: translateX(-50%);
 }
 
 .add-item-button img {
-    position:relative;
-    left:-50%;
     width: 77px;
     height: 77px;
 }

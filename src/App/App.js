@@ -210,6 +210,7 @@ class App extends Component {
         };
         try {
             const result = await axios.post(`${process.env.REACT_APP_BC_API}`, {...data});
+            this.setState({createDate: result.data.createDate});
             this.props.history.push(`/${result.data.id}`);
         } catch (e) {
             console.log(e);
