@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
+    "clipboard": "^2.0.8",
     "react": "^16.14.0",
     "react-dnd": "^11.1.3",
     "react-dnd-html5-backend": "^11.1.3",

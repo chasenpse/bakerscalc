@@ -67,7 +67,7 @@
     margin-left:auto;
 }
 
-@media screen and (max-width: 820px) {
+@media screen and (max-width: 819px) {
     .option {
         font-size:1.3rem;
     }

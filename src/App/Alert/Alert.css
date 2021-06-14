@@ -1,0 +1,21 @@
+.alert {
+    padding: 1rem 2rem;
+    background:#eee;
+    color:#000;
+    text-align: center;
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform: translateX(-50%);
+    z-index:80;
+    border-radius: 4px;
+    box-shadow:0 0 1rem rgba(0,0,0,1);
+    animation: fadeIn 200ms;
+    animation-fill-mode: forwards;
+    cursor: pointer;
+}
+
+.alert.dismiss {
+    animation: fadeOut 200ms;
+    animation-fill-mode: forwards;
+}

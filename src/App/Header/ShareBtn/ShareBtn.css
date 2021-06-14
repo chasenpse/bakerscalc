@@ -1,19 +1,20 @@
-#saveBtn {
+#shareBtn {
     display:inline-block;
     border:0;
-    background: url('save.png');
+    background: url('share.png');
     background-size: 100% auto;
     background-repeat: no-repeat;
     width:32px;
     height:26px;
     padding:0;
     opacity: 0.5;
+    margin-right:1rem;
 }
-#saveBtn:hover, #saveBtn:active {
+#shareBtn:hover, #shareBtn:active {
     opacity: 1;
 }
 @media screen and (max-width: 819px) {
-    #saveBtn {
+    #shareBtn {
         width:24px;
         height:20px;
     }

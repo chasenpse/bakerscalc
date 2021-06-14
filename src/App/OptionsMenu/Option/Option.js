@@ -24,10 +24,10 @@ const Option = ({id, label, value, type, min, step, data, onOptionChange, toolti
                 <span
                     className={"tooltip__icon"}
                     onMouseMove={e=>handleTooltip(e)}
-                    onMouseOut={e=>setTt(false)}
+                    onMouseOut={()=>setTt(false)}
                 >?</span>
                 <Tooltip open={tt} x={x} y={y}>
-                    { tooltip.map(t=><p>{t}</p>) }
+                    { tooltip.map((t,i)=><p key={`tt-${i}`}>{t}</p>) }
                 </Tooltip>
             </span>
         )

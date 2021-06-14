@@ -1,0 +1,56 @@
+.shareMenu {
+    background: linear-gradient(to bottom, #feba59 0%, #fcaa4a 100%);
+    color:#000;
+    border-radius:4px;
+    padding:0 2rem;
+    box-sizing: border-box;
+    width:200px;
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    z-index: 75;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    animation: fadeIn 200ms;
+    animation-fill-mode: forwards;
+}
+
+.shareMenu .urlDisabled {
+    margin-bottom:1rem;
+    text-align: center;
+    cursor: not-allowed;
+}
+
+.shareMenu .url {
+    border-radius: 10px;
+    background:rgba(0,0,0,0.8);
+    width:100px;
+    margin:0 auto 1rem auto;
+    height:2rem;
+    line-height:2rem;
+    text-align: center;
+    font-weight:700;
+    color:#eee;
+    cursor: pointer;
+}
+
+.close {
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    font-weight:bold;
+    position:fixed;
+    top:6px;
+    right:6px;
+}
+
+.shareMenu .title {
+    border-bottom:1px solid rgba(0,0,0,0.5);
+    color:#000;
+    width:100%;
+    padding:4px 0;
+    text-align:center;
+    font-weight:700;
+    font-size:1.5rem;
+    margin-bottom:1rem;
+}

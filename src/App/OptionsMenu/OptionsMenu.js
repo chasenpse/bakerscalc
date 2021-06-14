@@ -3,6 +3,7 @@ import Option from "./Option/Option";
 import './OptionsMenu.css'
 import CloseMenuBtn from "./CloseMenuBtn/CloseMenuBtn";
 import Footer from "./Footer/Footer";
+import Overlay from "../Overlay/Overlay";
 
 const OptionsMenu = ({options, visible, onMenuBtnClick, onOptionChange}) => {
     const getOptions = options => {
@@ -23,35 +24,35 @@ const OptionsMenu = ({options, visible, onMenuBtnClick, onOptionChange}) => {
 
     switch(visible) {
         case true:
-
             return (
-                <div className={"overlay"}>
+                <>
                     <div className={"options-container"}>
                         <CloseMenuBtn  onMenuBtnClick={onMenuBtnClick} />
                         <h1>BakersCalc</h1>
                         <div className={"options-list"}>
                             {
                                 getOptions(options).map((option) => {
-                                        return (
-                                            <Option
-                                                key={option[0]}
-                                                id={option[0]}
-                                                label={option[1].label}
-                                                value={option[1].value}
-                                                data={option[1].data || null}
-                                                type={option[1].type}
-                                                min={option[1].min || 0}
-                                                step={option[1].step || 1}
-                                                onOptionChange={onOptionChange}
-                                                tooltip={option[1].tooltip}
-                                            />
-                                        )
+                                    return (
+                                        <Option
+                                            key={option[0]}
+                                            id={option[0]}
+                                            label={option[1].label}
+                                            value={option[1].value}
+                                            data={option[1].data || null}
+                                            type={option[1].type}
+                                            min={option[1].min || 0}
+                                            step={option[1].step || 1}
+                                            onOptionChange={onOptionChange}
+                                            tooltip={option[1].tooltip}
+                                        />
+                                    )
                                 })
                             }
                         </div>
                         <Footer />
                     </div>
-                </div>
+                    <Overlay close={onMenuBtnClick} />
+                </>
             )
         default:
             return null;

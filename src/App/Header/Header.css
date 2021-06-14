@@ -1,5 +1,5 @@
 header {
-    display: flex;
+    display:flex;
     justify-content: space-between;
     position: fixed;
     top:0;
@@ -10,12 +10,26 @@ header {
     z-index:50;
 }
 
-button {
+.headerBtnContainer {
+    width:80px;
+}
+
+header button {
     cursor: pointer;
 }
 
-@media screen and (max-width: 820px) {
+@media screen and (max-width: 819px) {
     header {
+        justify-content: left;
+        align-items: center;
         padding:10px;
+    }
+    .headerBtnContainer {
+        display:inline-block;
+        width:unset;
+    }
+    .headerBtnContainer:last-of-type {
+        position: absolute;
+        right:10px;
     }
 }

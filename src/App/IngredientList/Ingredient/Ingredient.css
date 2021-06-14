@@ -184,7 +184,7 @@ input::placeholder {
     color: rgba(0,0,0,0.5);
 }
 
-@media screen and (max-width: 820px) {
+@media screen and (max-width: 819px) {
     .ingredient {
         height: unset;
     }

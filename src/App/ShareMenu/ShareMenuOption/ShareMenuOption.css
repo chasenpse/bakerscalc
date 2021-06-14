@@ -1,0 +1,9 @@
+.shareMenuOption {
+    margin-bottom:1rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.shareMenuOption:hover {
+    font-weight:700;
+}

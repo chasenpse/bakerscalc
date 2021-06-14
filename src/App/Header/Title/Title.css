@@ -5,9 +5,8 @@
     background:none;
     border:0;
     color:#fff;
-    width:100%;
-    margin:0 10px;
-    padding:0;
+    width:620px;
+    box-sizing: border-box;
     vertical-align: text-bottom;
     text-align: center;
     -webkit-overflow-scrolling: touch;
@@ -17,8 +16,11 @@
     color:rgba(255,255,255,0.5);
 }
 
-@media screen and (max-width: 820px) {
+@media screen and (max-width: 819px) {
     .title {
-        font-size:1.6em;
+        width:unset;
+        text-align:left;
+        font-size:1.5em;
+        margin-right:1rem;
     }
 }

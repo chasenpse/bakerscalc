@@ -9,10 +9,12 @@ import CreateDate from "./CreateDate/CreateDate";
 import AddBtn from "./AddBtn/AddBtn";
 import {setWeight} from "../utils/setWeight";
 import Loader from "./Loader/Loader";
+import ShareMenu from "./ShareMenu/ShareMenu";
 
 class App extends Component {
 
     state = {
+        formulaId: null,
         title: '',
         createDate: null,
         ingredients: [],
@@ -158,6 +160,9 @@ class App extends Component {
             }
         },
         loading: false,
+        shareMenu: false,
+        touched: false,
+        alert: false,
     }
 
     async componentDidMount() {
@@ -167,7 +172,9 @@ class App extends Component {
             try {
                 const result = await axios.get(`${process.env.REACT_APP_BC_API}/${id}`);
                 if (result.data) {
+                    this.setState({compareStr: JSON.stringify(result.data)})
                     this.setState(prevState => ({
+                        formulaId: result.data.id,
                         title: result.data.title,
                         createDate: result.data.createDate,
                         options: {...prevState.options,
@@ -184,6 +191,7 @@ class App extends Component {
                             panWidth: {...prevState.options.panWidth, value:result.data.panWidth}},
                         ingredients: result.data.ingredients,
                         loading: false,
+                        touched: false,
                     }), this.calcWeight)
                 }
             } catch (e) {
@@ -193,6 +201,7 @@ class App extends Component {
     }
 
     saveBtnClick = async () => {
+        this.setState({loading:true})
         const data = {
             title: this.state.title,
             numOfDoughBalls: this.state.options.numOfDoughBalls.value,
@@ -211,11 +220,17 @@ class App extends Component {
         try {
             const result = await axios.post(`${process.env.REACT_APP_BC_API}`, {...data});
             this.setState({createDate: result.data.createDate});
+            this.setState({formulaId: result.data.id});
             this.props.history.push(`/${result.data.id}`);
+            this.setState({loading:false})
+            this.setState({touched:false})
         } catch (e) {
             console.log(e);
+            this.setState({loading:false})
         }
     }
+
+    shareBtnClick = () => this.setState(p=>({shareMenu: !p.shareMenu}))
 
     addIngredient = () => {
         const ingredient = {
@@ -230,9 +245,13 @@ class App extends Component {
             top: document.body.scrollHeight,
             behavior: "smooth"
         });
+        this.setState({touched:true})
     }
 
-    handleTitleUpdate = (val) => this.setState({title: val});
+    handleTitleUpdate = (val) => {
+        this.setState({title: val});
+        this.setState({touched:true});
+    }
 
     handleNameUpdate = (id,val) => {
         this.setState(prevState => ({
@@ -240,6 +259,7 @@ class App extends Component {
                 i === id ? { ...ingredient, name: val } : ingredient
             ),
         }));
+        this.setState({touched:true})
     }
 
     handlePercentUpdate = (id,val) => {
@@ -248,6 +268,7 @@ class App extends Component {
                 i === id ? { ...ingredient, percent: Number(val) } : ingredient
             ),
         }), () => this.calcWeight());
+        this.setState({touched:true})
     }
 
     handleTypeUpdate = (id,val) => {
@@ -256,6 +277,7 @@ class App extends Component {
                 i === id ? { ...ingredient, type: val } : ingredient
             ),
         }), () => this.calcWeight());
+        this.setState({touched:true})
     }
 
     handleHydrationUpdate = (id,val) => {
@@ -264,12 +286,14 @@ class App extends Component {
                 i === id ? { ...ingredient, hydration: Number(val) } : ingredient
             ),
         }), () => this.calcWeight());
+        this.setState({touched:true})
     }
 
     handleRemoveIngredient = (id) => {
         this.setState(prevState => ({
             ingredients: prevState.ingredients.filter((ingredient, i)=>i!==id)
         }), () => this.calcWeight());
+        this.setState({touched:true})
     }
 
     updateOption = (id, type, val) => {
@@ -309,6 +333,7 @@ class App extends Component {
                 }
                 break;
         }
+        this.setState({touched:true})
     }
 
     updateDSTotalWeight = () => {
@@ -420,20 +445,45 @@ class App extends Component {
     }
 
     render() {
-        const { totalWeight, ballWeight, totalPercent, totalFlour, hydration, ingredients, options, optionsVisible, title, createDate, loading } = this.state;
+        const {
+            totalWeight,
+            ballWeight,
+            totalPercent,
+            totalFlour,
+            hydration,
+            ingredients,
+            options,
+            optionsVisible,
+            title,
+            createDate,
+            loading,
+            shareMenu,
+        } = this.state;
+        const precision = this.state.options.precision.value;
+        const displayUnits = this.state.options.displayUnits.value;
+
         if (loading) {
             return <Loader />
         }
-        const precision = this.state.options.precision.value;
-        const displayUnits = this.state.options.displayUnits.value;
+
         return (
             <div className={"App"}>
                 <Header
                     onMenuBtnClick={this.toggleMenuClick}
                     onSaveBtnClick={this.saveBtnClick}
+                    onShareBtnClick={this.shareBtnClick}
                     title={title}
                     handleTitleUpdate={this.handleTitleUpdate}
                 />
+                {
+                    shareMenu ?
+                    <ShareMenu
+                        close={()=>{this.setState({shareMenu: false})}}
+                        url={this.state.formulaId}
+                        touched={this.state.touched}
+                        data={this.state}
+                    /> : null
+                }
                 <OptionsMenu
                     options={options}
                     visible={optionsVisible}
@@ -455,7 +505,7 @@ class App extends Component {
                     handleRemoveIngredient={this.handleRemoveIngredient}
                     precision={precision}
                 />
-                <CreateDate date={createDate} />
+                {createDate ? <CreateDate date={createDate} /> : null}
                 <AddBtn addIngredient={this.addIngredient} />
             </div>
         );
