@@ -1,9 +1,8 @@
 #shareBtn {
     display:inline-block;
     border:0;
-    background: url('share.png');
+    background: url('share.png') no-repeat;
     background-size: 100% auto;
-    background-repeat: no-repeat;
     width:32px;
     height:26px;
     padding:0;
