@@ -1,6 +1,7 @@
 .option {
     font-size:1.5rem;
     line-height:3.125rem;
+    vertical-align: middle;
     padding:0 16px;
     color:#000;
     font-weight:bold;
@@ -14,12 +15,17 @@
     border:0;
     border-radius:4px;
     box-sizing: border-box;
+    vertical-align: middle;
 }
 
 .option input {
     width:80px;
     padding:0 10px;
     text-align: right;
+}
+
+.option input.small {
+    width:50px;
 }
 
 .option select {

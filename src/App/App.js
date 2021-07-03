@@ -96,6 +96,7 @@ class App extends Component {
                 value: 453.59,
                 group: "baker's percentage",
                 type: 'input',
+                step: 0.01,
                 position: 6,
                 tooltip: [
                     "Set the desired individual ball weight represented in the display units above"

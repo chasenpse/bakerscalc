@@ -42,6 +42,7 @@ const Option = ({id, label, value, type, min, step, data, onOptionChange, toolti
                     <span className={"option__value"}>
                             <input
                                 inputMode="decimal"
+                                className={step === 1 ? "small" : null}
                                 type={"number"}
                                 min={min}
                                 step={step}
