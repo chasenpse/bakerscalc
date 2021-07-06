@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import './App.css';
 import Header from './Header/Header';
@@ -174,6 +175,7 @@ class App extends Component {
                 const result = await axios.get(`${process.env.REACT_APP_BC_API}/${id}`);
                 if (result.data) {
                     this.setState({compareStr: JSON.stringify(result.data)})
+                    let ingredients = result.data.ingredients.map(i=>({...i, uuid: uuidv4()}))
                     this.setState(prevState => ({
                         formulaId: result.data.id,
                         title: result.data.title,
@@ -190,7 +192,7 @@ class App extends Component {
                             panDiameter: {...prevState.options.panDiameter, value:result.data.panDiameter},
                             panLength: {...prevState.options.panLength, value:result.data.panLength},
                             panWidth: {...prevState.options.panWidth, value:result.data.panWidth}},
-                        ingredients: result.data.ingredients,
+                        ingredients,
                         loading: false,
                         touched: false,
                     }), this.calcWeight)
@@ -233,22 +235,6 @@ class App extends Component {
 
     shareBtnClick = () => this.setState(p=>({shareMenu: !p.shareMenu}))
 
-    addIngredient = () => {
-        const ingredient = {
-            name: '',
-            percent: '',
-            type: 'none',
-            hydration: '',
-            weight: 0,
-        }
-        this.setState({ingredients: [...this.state.ingredients, ingredient]});
-        window.scrollBy({
-            top: document.body.scrollHeight,
-            behavior: "smooth"
-        });
-        this.setState({touched:true})
-    }
-
     handleTitleUpdate = (val) => {
         this.setState({title: val});
         this.setState({touched:true});
@@ -290,9 +276,26 @@ class App extends Component {
         this.setState({touched:true})
     }
 
-    handleRemoveIngredient = (id) => {
+    addIngredient = () => {
+        const ingredient = {
+            name: '',
+            uuid: uuidv4(),
+            percent: '',
+            type: 'none',
+            hydration: '',
+            weight: 0,
+        }
+        this.setState({ingredients: [...this.state.ingredients, ingredient]});
+        window.scrollBy({
+            top: document.body.scrollHeight,
+            behavior: "smooth"
+        });
+        this.setState({touched:true})
+    }
+
+    handleRemoveIngredient = (uuid) => {
         this.setState(prevState => ({
-            ingredients: prevState.ingredients.filter((ingredient, i)=>i!==id)
+            ingredients: prevState.ingredients.filter((ingredient)=>ingredient.uuid!==uuid)
         }), () => this.calcWeight());
         this.setState({touched:true})
     }
@@ -439,12 +442,6 @@ class App extends Component {
         }), () => this.updateDoughStats());
     }
 
-    toggleMenuClick = () => {
-        this.setState((prevState) => ({
-            optionsVisible: !prevState.optionsVisible
-        }));
-    }
-
     render() {
         const {
             totalWeight,
@@ -470,7 +467,7 @@ class App extends Component {
         return (
             <div className={"App"}>
                 <Header
-                    onMenuBtnClick={this.toggleMenuClick}
+                    onMenuBtnClick={()=>{this.setState({optionsVisible: true})}}
                     onSaveBtnClick={this.saveBtnClick}
                     onShareBtnClick={this.shareBtnClick}
                     title={title}
@@ -485,12 +482,14 @@ class App extends Component {
                         data={this.state}
                     /> : null
                 }
-                <OptionsMenu
-                    options={options}
-                    visible={optionsVisible}
-                    onMenuBtnClick={this.toggleMenuClick}
-                    onOptionChange={this.updateOption}
-                />
+                {
+                    optionsVisible ?
+                        <OptionsMenu
+                            options={options}
+                            onMenuBtnClick={()=>{this.setState({optionsVisible: false})}}
+                            onOptionChange={this.updateOption}
+                        /> : null
+                }
                 <DoughStatsList
                     data={{totalWeight, ballWeight, totalPercent, totalFlour, hydration}}
                     units={displayUnits}

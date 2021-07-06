@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {createPortal} from 'react-dom';
 import './ShareMenu.css'
 import ShareMenuOption from "./ShareMenuOption/ShareMenuOption";
@@ -8,6 +8,8 @@ import genHTML from "../../utils/genHTML";
 import ClipboardJS from "clipboard";
 
 const ShareMenu = ({close, url, touched, data}) => {
+
+    const [show, setShow] = useState(true);
 
     new ClipboardJS('#copyURL', {
         text: () => window.location.href,
@@ -23,8 +25,14 @@ const ShareMenu = ({close, url, touched, data}) => {
 
     return createPortal(
         <>
-            <div className={'shareMenu'}>
-                <div className={'close'} onClick={close}>X</div>
+            <div
+                className={'shareMenu'}
+                style={{
+                    animationName: `${show ? "fadeIn, slideDown" : "fadeOut, slideUp"}`
+                }}
+                onAnimationEnd={show ? null : close}
+            >
+                <div className={'close'} onClick={()=>setShow(false)}>X</div>
                 <div className={"title"}>Click to copy:</div>
                 {
                     url && !touched ?
@@ -44,7 +52,7 @@ const ShareMenu = ({close, url, touched, data}) => {
                     label={'HTML'}
                 />
             </div>
-            <Overlay close={close} />
+            <Overlay display={show} close={()=>setShow(false)} />
         </>,
         document.getElementById("portal")
     )

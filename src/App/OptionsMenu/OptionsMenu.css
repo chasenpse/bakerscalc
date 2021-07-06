@@ -8,7 +8,7 @@
     height:100vh;
     z-index: 70;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    animation: fadeIn 200ms;
+    animation-duration: 150ms;
     animation-fill-mode: forwards;
 }
 
@@ -25,18 +25,6 @@
     font-size:3rem;
     font-weight:700;
     color: rgba(0,0,0,1);
-}
-
-.placeholder {
-    text-align: center;
-    font-size:1.5rem;
-    font-weight:700;
-    color:rgba(153,151,152,0.75);
-    transition: all linear 100ms;
-}
-
-.placeholder:hover {
-    color:rgba(153,151,152,1);
 }
 
 .addHl {

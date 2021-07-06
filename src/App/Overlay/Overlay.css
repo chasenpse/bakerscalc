@@ -7,6 +7,6 @@
     background: rgba(0,0,0,0.5);
     z-index:60;
     overflow:hidden;
-    animation: fadeIn 200ms;
+    animation-duration:200ms;
     animation-fill-mode: forwards;
 }

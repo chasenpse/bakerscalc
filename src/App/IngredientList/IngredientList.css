@@ -5,6 +5,16 @@
 
 .placeholder {
     margin-bottom: 20px;
+    text-align: center;
+    font-size:1.5rem;
+    font-weight:700;
+    color:rgba(153,151,152,0.75);
+    transition: all linear 100ms;
+    cursor: default;
+}
+
+.placeholder:hover {
+    color:rgba(153,151,152,1);
 }
 
 input[type=number]::-webkit-inner-spin-button,

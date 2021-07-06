@@ -7,11 +7,11 @@ const IngredientList = ({ingredients, units, handleNameUpdate, handlePercentUpda
         <div className={"ingredient-list"}>
             {
                 ingredients.length ?
-                    ingredients.map((ingredient, i) => {
+                    ingredients.map((ingredient) => {
                         return(
                             <Ingredient
-                                key={i}
-                                id={i}
+                                key={ingredient.uuid}
+                                uuid={ingredient.uuid}
                                 name={ingredient.name}
                                 percent={ingredient.percent}
                                 type={ingredient.type}
