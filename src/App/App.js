@@ -240,37 +240,37 @@ class App extends Component {
         this.setState({touched:true});
     }
 
-    handleNameUpdate = (id,val) => {
+    handleNameUpdate = (uuid,val) => {
         this.setState(prevState => ({
-            ingredients: prevState.ingredients.map((ingredient, i) =>
-                i === id ? { ...ingredient, name: val } : ingredient
+            ingredients: prevState.ingredients.map((i) =>
+                i.uuid === uuid ? { ...i, name: val } : i
             ),
         }));
         this.setState({touched:true})
     }
 
-    handlePercentUpdate = (id,val) => {
+    handlePercentUpdate = (uuid,val) => {
         this.setState(prevState => ({
-            ingredients: prevState.ingredients.map((ingredient, i) =>
-                i === id ? { ...ingredient, percent: Number(val) } : ingredient
+            ingredients: prevState.ingredients.map((i) =>
+                i.uuid === uuid ? { ...i, percent: Number(val) } : i
             ),
         }), () => this.calcWeight());
         this.setState({touched:true})
     }
 
-    handleTypeUpdate = (id,val) => {
+    handleTypeUpdate = (uuid,val) => {
         this.setState(prevState => ({
-            ingredients: prevState.ingredients.map((ingredient, i) =>
-                i === id ? { ...ingredient, type: val } : ingredient
+            ingredients: prevState.ingredients.map((i) =>
+                i.uuid === uuid ? { ...i, type: val } : i
             ),
         }), () => this.calcWeight());
         this.setState({touched:true})
     }
 
-    handleHydrationUpdate = (id,val) => {
+    handleHydrationUpdate = (uuid,val) => {
         this.setState(prevState => ({
-            ingredients: prevState.ingredients.map((ingredient, i) =>
-                i === id ? { ...ingredient, hydration: Number(val) } : ingredient
+            ingredients: prevState.ingredients.map((i) =>
+                i.uuid === uuid ? { ...i, hydration: Number(val) } : i
             ),
         }), () => this.calcWeight());
         this.setState({touched:true})
