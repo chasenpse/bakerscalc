@@ -196,6 +196,7 @@ class App extends Component {
                         loading: false,
                         touched: false,
                     }), this.calcWeight)
+                    document.title = `${result.data.title} - BakersCalc`
                 }
             } catch (e) {
                 this.setState({loading: false});
