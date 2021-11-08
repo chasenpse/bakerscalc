@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "bcryptjs": "^2.4.3",
     "clipboard": "^2.0.8",
     "react": "^16.14.0",
